@@ -6,18 +6,19 @@
 		- Quantidade disponível no estoque: representado por um número inteiro;
 		- Preço de venda: representado por um valor real
 
-		a) Defina uma estrutura em C, denominada produto, que tenha os campos apropriados para guardar as informações de um produto;
-		b) Crie um conjunto de 10 produtos e peça ao usuário para entrar com as informações de cada produto;
+		a) Defina uma estrutura em C, denominada produto, que tenha os campos apropriados para
+		guardar as informações de um produto;
+		b) Crie um conjunto de 10 produtos e peça ao usuário para entrar com as informações
+		de cada produto;
 		c) Encontre o produto com o maior preço de venda;
 		d) Encontre o produto com a maior quantidade disponível no estoque.
 
 	Autor: Danilo Domingues Quirino
-	Versão: 2202.
+	Versão: 2202.10
 */
 
 // Bibliotecas
 #include <stdio.h>
-#define TT 3
 
 typedef struct produtosEstoque
 {
@@ -32,7 +33,7 @@ int gerirMenu()
 	int opcao;
 	printf("----------\n\tSISTEMA DE GERENCIAMENTO DE PRODUTOS");
 	printf("\nEscolha a operacao desejada, informando o codigo correpondente.");
-	printf("\n1 - Inserir um conjunto de produtos;");
+	printf("\n1 - Reinserir um conjunto de produtos;");
 	printf("\n2 - Encontrar o produto com maior Preco de Venda;");
 	printf("\n3 - Encontrar o produto com o maior Estoque;");
 	printf("\n0 - Encerrar Sistema.");
@@ -45,18 +46,10 @@ int gerirMenu()
 	return opcao;
 }
 
-void verificar (produto verificacao[])
-{
-	if (verificacao[] != NULL)
-	{
-		/* code */
-	}
-	
-}
 
 void leituraDados(produto leitura[])
 {
-	for (int i = 0; i < TT; i++)
+	for (int i = 0; i < 10; i++)
 	{
 		printf("Insira as informacoes do produto %d ::\n", i + 1);
 		printf("Nome do Produto :: ");
@@ -76,22 +69,26 @@ void apresentarMaiorPreco(produto produtos[])
 {
 	float maiorPreco = produtos[0].precoVenda;
 	int posicao = 0;
-	for (int i = 1; i < TT; i++)
-	{
-		if (produtos[i].precoVenda > maiorPreco)
+
+
+		for (int i = 1; i < 10; i++)
 		{
-			maiorPreco = produtos[i].precoVenda;
-			posicao = i;
+			if (produtos[i].precoVenda > maiorPreco)
+			{
+				maiorPreco = produtos[i].precoVenda;
+				posicao = i;
+			}
 		}
-	}
-	printf("\nO produto %s possui o maior Preco de Venda.\n\tSua valor eh de R$ %0.2f.\n\n", produtos[posicao].nomeProduto, produtos[posicao].precoVenda);
+		printf("\nO produto %s possui o maior Preco de Venda.\n\tSua valor eh de R$ %0.2f.\n\n",
+			   produtos[posicao].nomeProduto, produtos[posicao].precoVenda);
+	
 }
 
 void apresentarMaiorEstoque(produto produtos[])
 {
 	float maiorEstoque = produtos[0].quantidadeEstoque;
 	int posicao = 0;
-	for (int i = 1; i < TT; i++)
+	for (int i = 1; i < 10; i++)
 	{
 		if (produtos[i].quantidadeEstoque > maiorEstoque)
 		{
@@ -99,42 +96,38 @@ void apresentarMaiorEstoque(produto produtos[])
 			posicao = i;
 		}
 	}
-	printf("\nO produto %s possui o maior Estoque.\n\tSeu estoque atual eh de %d unidades.\n\n", produtos[posicao].nomeProduto, produtos[posicao].quantidadeEstoque);
+	printf("\nO produto %s possui o maior Estoque.\n\tSeu estoque atual eh de %d unidades.\n\n",
+			produtos[posicao].nomeProduto, produtos[posicao].quantidadeEstoque);
 }
 
 int main()
 {
-	produto produtos[TT];
+	produto produtos[10];
 	int opcao;
-
+	printf("Entre com a primeira ordem de PRODUTOs.\n");
+	leituraDados(produtos);
 	do
 	{
 		opcao = gerirMenu();
 		switch (opcao)
 		{
 		case 1:
-			verificar(produtos);
 			leituraDados(produtos);
 			break;
-		
+
 		case 2:
 			apresentarMaiorPreco(produtos);
 			break;
 
 		case 3:
 			apresentarMaiorEstoque(produtos);
-			break; 
+			break;
 
 		case 0:
 			printf("\n\nENCERRANDO SISTEMA");
 			break;
 		}
 	} while (opcao != 0);
-	
-
-	
-	
-
 
 	return 0;
 }

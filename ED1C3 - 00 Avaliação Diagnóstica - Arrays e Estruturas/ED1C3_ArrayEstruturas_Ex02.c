@@ -1,17 +1,49 @@
 /*
-	EXERCÍCIO 01:
-	Criar uma estrutura representando os alunos de um determinado curso. A estrutura deve conter o prontuário do aluno,
-	nome, nota da primeira prova, nota da segunda prova e notada terceira prova.
-	Em seguida, implementar as seguintes funções:
-		a) Ler os dados de 50 alunos;
-		b) Apresentar o nome do aluno com maior nota da primeira prova;
-		c) Apresentar o prontuário e o aluno com maior média geral;
-		d) Para cada, apresentar se o mesmo foi aprovado ou reprovado, considerando a media 6.0 para aprovação.
+	EXERCÍCIO 02:
+	Leia um vetor de 16 posições e troque os 8 primeiros valores pelos 8 últimos e vice-e versa.
+	Escreva ao final o vetor obtido..
 
 	Autor: Danilo Domingues Quirino
-	Versão: 2202.
+	Versão: 2202.10
 */
 
 // Bibliotecas
 #include <stdio.h>
-#define TT 50
+
+void preencherVetor(int vetor[])
+{
+	int i;
+	for (i = 0; i < 16; i++)
+	{
+		printf("informe o valor da posicao %d: ", i);
+		scanf("%d", &vetor[i]);
+	}
+}
+
+void trocarPosicao(int vetor[])
+{
+	int j = 8; // metade do vetor
+	for (int i = 0; i < j; i++)
+	{
+		int aux;
+		aux = vetor[i];
+		vetor[i] = vetor[i + j];
+		vetor[i + j] = aux;
+	}
+}
+
+void apresentarVetor(int vetor[])
+{
+	for (int i = 0; i < 16; i++)
+	{
+		printf("%d, ", vetor[i]);
+	}
+}
+
+void main()
+{
+	int vetor[16];
+	preencherVetor(vetor);
+	trocarPosicao(vetor);
+	apresentarVetor(vetor);
+}
