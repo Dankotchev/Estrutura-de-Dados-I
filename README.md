@@ -6,5 +6,5 @@ A disciplina ministrada pelo professor Marcelo Roberto Zorzan.
 
 ## _Conteúdo Abordado_:
 
-### - Revisão de Arrays e Estruturas em  C
-
+### - Revisão de Arrays e Estruturas em  C;
+### - Listas Estáticas;
