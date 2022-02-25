@@ -77,7 +77,9 @@ int pop(PILHA *umaPilha)
     }
 }
 
-void pilha_Imprimir(PILHA *umaPilha)
+// Demais funções
+
+void pilha_ImprimirSemDesenpilhar(PILHA *umaPilha)
 {
     printf(" _____________\n");
     for (int i = umaPilha->topo; i >= 0; i--)
@@ -86,8 +88,6 @@ void pilha_Imprimir(PILHA *umaPilha)
         printf("|-------------|\n");
     }
 }
-
-// Demais funções
 
 void preencher_Pilha(PILHA *umaPilha, int quantidade)
 {
@@ -105,7 +105,7 @@ void preencher_Pilha(PILHA *umaPilha, int quantidade)
     }
 }
 
-//Recebe a pilha original vazia, uma pilha auxiliar e empilha elementos da auxiliar na original
+// Recebe a pilha original vazia, uma pilha auxiliar e empilha elementos da auxiliar na original
 void organizar_PilhaInserir(PILHA *originalPilha, PILHA *auxPilha)
 {
     while (!pilha_Vazia(auxPilha))
@@ -115,7 +115,7 @@ void organizar_PilhaInserir(PILHA *originalPilha, PILHA *auxPilha)
 }
 
 
-//Recebe a pilha original, e separa em duas pilhas auxiliares diferentes
+// Recebe a pilha original, e separa em duas pilhas auxiliares diferentes
 void organizar_Pilha(PILHA *originalPilha)
 {
     PILHA pilhaPares, pilhaImpares;
@@ -123,7 +123,7 @@ void organizar_Pilha(PILHA *originalPilha)
     pilha_Inicializar(&pilhaPares);
     pilha_Inicializar(&pilhaImpares);
 
-    // Primeira Etapa: Separar valores e duas pilhas diferentes
+    // Primeira Etapa: Separar valores em duas pilhas diferentes
     while (!pilha_Vazia(originalPilha))
     {
         valor = pop(originalPilha);
@@ -138,7 +138,9 @@ void organizar_Pilha(PILHA *originalPilha)
     }
 
     // Segunda Etapa: Reunir valores na pilha original seguindo a regra
+    // Pares na base da pilha
     organizar_PilhaInserir(originalPilha, &pilhaPares);
+    // Ímpares no topo da pilha
     organizar_PilhaInserir(originalPilha, &pilhaImpares);
 }
 
@@ -155,12 +157,12 @@ int main()
     preencher_Pilha(&pilhaGeral, quantidade);
 
     printf("\nA pilha tem a seguinte forma e valores: \n");
-    pilha_Imprimir(&pilhaGeral);
+    pilha_ImprimirSemDesenpilhar(&pilhaGeral);
 
     printf("\nOrdenando a pilha...\n\tValores PARES em baixo da pilha;\n\tValores IMPARES acima na pilha.");
     organizar_Pilha(&pilhaGeral);
     printf("\nA pilha organizada conforme a regra tem a seguinte forma e valores: \n");
-    pilha_Imprimir(&pilhaGeral);
+    pilha_ImprimirSemDesenpilhar(&pilhaGeral);
 
     return 0;
 }

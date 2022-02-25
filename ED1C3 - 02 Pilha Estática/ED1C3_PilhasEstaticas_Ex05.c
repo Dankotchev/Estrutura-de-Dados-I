@@ -21,7 +21,6 @@ typedef struct sPilha
     int topo;
 } PILHA;
 
-// Funções referentes a Pilha
 void pilha_Inicializar(PILHA *umaPilha)
 {
     umaPilha->topo = -1;

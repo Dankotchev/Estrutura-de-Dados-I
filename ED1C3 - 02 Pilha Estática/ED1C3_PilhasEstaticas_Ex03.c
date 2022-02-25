@@ -22,26 +22,6 @@ typedef struct sPilha
     int topo;
 } PILHA;
 
-/*
-int gerirMenu()
-{
-    int opcao;
-    printf("\n----------\n\tOPERACOES SOBRE UMA LISTA LINEAR");
-    printf("\nEscolha a operacao desejada, informando o codigo correpondente.");
-    printf("\n1 - Inserir elementos na lista L1;");
-    printf("\n2 - Inserir elementos na lista L2;");
-    printf("\n3 - Em lista L3, intercalar os elementos de L1 e L2;");
-    printf("\n0 - Encerrar Sistema.\n");
-
-    do
-    {
-        printf("Escolha ==> ");
-        scanf("%d", &opcao);
-    } while (opcao < 0 || opcao > 3);
-    return opcao;
-}
-*/
-
 // Funções referentes a Pilha
 void pilha_inicializar(PILHA *umaPilha)
 {
@@ -100,6 +80,8 @@ int pop(PILHA *umaPilha)
     }
 }
 
+// Demais Funções
+
 void pilha_ImprimirSemDesempilhar(PILHA *umaPilha)
 {
     printf(" _____________\n");
@@ -109,8 +91,6 @@ void pilha_ImprimirSemDesempilhar(PILHA *umaPilha)
         printf("|-------------|\n");
     }
 }
-
-// Demais Funções
 
 int lerInteiro()
 {

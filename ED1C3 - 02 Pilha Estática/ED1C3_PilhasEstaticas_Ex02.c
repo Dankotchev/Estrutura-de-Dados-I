@@ -19,6 +19,8 @@ typedef struct sPilha
     int topo;
 } PILHA;
 
+
+// Funções Básicas de Pilhas
 void pilha_inicializar(PILHA *p)
 {
     p->topo = -1;
@@ -76,6 +78,7 @@ int pop(PILHA *p)
     }
 }
 
+// Outras Funções
 void pilha_imprimir(PILHA *p)
 {
     int x;
@@ -96,7 +99,7 @@ int main()
     int valores;
 
     printf("Informe os 15 valores.:");
-    for (int i = 0; i < 3; i++)
+    for (int i = 0; i < 15; i++)
     {
         printf("\n\nInforme o item %d: ", i);
         scanf("%d", &valores);

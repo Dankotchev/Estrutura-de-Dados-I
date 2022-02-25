@@ -50,7 +50,7 @@ int pilha_Vazia(PILHA *umaPilha)
     }
 }
 
-void push(PILHA *umaPilha, int x)
+void push(PILHA *umaPilha, char x)
 {
     if (pilha_Cheia(umaPilha))
     {
@@ -63,9 +63,9 @@ void push(PILHA *umaPilha, int x)
     }
 }
 
-int pop(PILHA *umaPilha)
+char pop(PILHA *umaPilha)
 {
-    int x;
+    char x;
     if (pilha_Vazia(umaPilha))
     {
         printf("\nErro: Pilha Vazia.");
@@ -78,22 +78,62 @@ int pop(PILHA *umaPilha)
     }
 }
 
-void pilha_Imprimir(PILHA *umaPilha)
+void trocarTopoBase(PILHA *p)
 {
-    printf(" _____________\n");
+    PILHA s;
+    pilha_Inicializar(&s);
+    char auxA, auxB;
+
+    auxA = pop(p);
+    while (p->topo != 0)
+    {
+        push(&s, pop(p));
+    }
+    auxB = pop(p);
+    push(p, auxA);
+    while (!pilha_Vazia(&s))
+    {
+        push(p, pop(&s));
+    }
+    push(p, auxB);
+}
+
+void ImprimirSemDesempilhar(PILHA *umaPilha)
+{
+    printf("\n __________\n");
     for (int i = umaPilha->topo; i >= 0; i--)
     {
-        printf("|    %-5d    |\n", umaPilha->itens[i]);
-        printf("|-------------|\n");
+        printf("|    %c    |\n", umaPilha->itens[i]);
+        printf("|---------|\n");
     }
 }
 
 int main()
 {
     srand(time(NULL));
-    PILHA pilhaP;
+    PILHA p;
+    int quantidade;
 
-    pilha_Inicializar(&pilhaP);
+    pilha_Inicializar(&p);
+
+    printf("Informe quantos valores deseja empilhar na pilha P: ");
+    scanf("%d", &quantidade);
+    if (quantidade > TM)
+    {
+        quantidade = TM;
+        printf("Reajustando o valor informado para o maximo (%d) valores que a pilha aceita.\n", TM);
+    }
+
+    for (int i = 0; i < quantidade; i++)
+    {
+        push(&p, (97 + rand() % 26));
+    }
+
+    printf("\nA pilha P tem a seguinte forma e caracteres: \n");
+    ImprimirSemDesempilhar(&p);
+    printf("\nTrocando o caracter do Topo pelo da Base temos a seguinte pilha ...");
+    trocarTopoBase(&p);
+    ImprimirSemDesempilhar(&p);
 
     return 0;
 }
