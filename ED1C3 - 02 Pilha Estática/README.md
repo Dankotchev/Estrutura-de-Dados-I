@@ -1,22 +1,36 @@
+# Lista de Exercícios
+
 ## Exercício 01:
+
 Uma pilha implementa o mecanismo de inserção/remoção:
 	a. FIFO 
-	b. FIFA
-	**c. LIFO** `==> Resposta correta.`
-	d. FFLL
-	e. N.D.A.  
+
+​	b. FIFA
+
+​	**c. LIFO** `==> Resposta correta.`
+
+​	d. FFLL
+
+​	e. N.D.A.  
 
 ## Exercício 02:
 Codifique, compile e execute um programa que seja capaz de ler 15 números informados pelo usuário e proceda, para cada um deles, como segue:
-	a. se o número for par, insira-o na pilha;
-	b. se o número lido for ímpar, retire um número da pilha;
-	c. Ao final, esvazie a pilha imprimindo os elementos.
+
+​	a. se o número for par, insira-o na pilha;
+
+​	b. se o número lido for ímpar, retire um número da pilha;
+
+​	c. Ao final, esvazie a pilha imprimindo os elementos.
 
 ## Exercício 03:
 Codifique, compile e execute um programa que seja capaz de ler do usuário diversos números e, para cada um destes, realizar as seguintes operações:
-	a. se positivo, inserir na pilha P;
-	b. se negativo, inserir na pilha N;
-	c. se zero, retirar um elemento de cada pilha.
+
+​	a. se positivo, inserir na pilha P;
+
+​	b. se negativo, inserir na pilha N;
+
+​	c. se zero, retirar um elemento de cada pilha.
+
 **Observação:** Devem ser declaradas duas pilhas N e P que sejam capazes de armazenar valores positivos e negativos, respectivamente.  
 
 ## Exercício 04:
@@ -39,4 +53,11 @@ Dada uma pilha contendo números inteiros quaisquer, codifique uma função que 
 ## Exercício 08:
 
 Desenvolva um programa em Linguagem C que contenha todas as funções básicas apresentadas em sala de aula para uma estrutura de dados do tipo Pilha e que seja capaz de executar as funções solicitadas nos três últimos exercícios.
+
 **Observação:** Crie um menu para interação com o usuário.  
+
+# Trabalhos
+
+## Trabalho 01
+
+Considerando um programa em linguagem C que armazene em uma pilha P os seguintes dados: nome, idade e sexo. A partir desta pilha, codifique uma função que seja capaz de gerar duas outras pilhas: PF e PM, contendo, cada uma: nome e idade, sendo que a pilha PF armazena dados das pessoas femininas e a pilha PM das masculinas. Após este processo, exiba o conteúdo das duas pilhas.
