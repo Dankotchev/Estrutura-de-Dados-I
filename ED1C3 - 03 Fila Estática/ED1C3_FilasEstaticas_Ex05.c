@@ -5,7 +5,7 @@
     Codifique um programa que seja capaz de testar a função desenvolvida.
 
     Autor: Danilo Domingues Quirino
-    Versão: 2203.
+    Versão: 2203.18
 */
 
 #include <stdio.h>
@@ -58,15 +58,15 @@ void queue(FILA *f, int x)
     f->itens[f->fim] = x;
 }
 
-int dequeue (FILA *f)
+int dequeue(FILA *f)
 {
     int x;
 
     if (!verificarFila(f))
     {
-        if (f->inicio == TM -1)
+        if (f->inicio == TM - 1)
         {
-           f->inicio = 0;
+            f->inicio = 0;
         }
         else
         {
@@ -81,6 +81,24 @@ int dequeue (FILA *f)
     return x;
 }
 
+void imprimirFila(FILA *f)
+{
+    int i = (f->inicio + 1) % TM;
+    if (!verificarFila(f))
+    {
+        printf("\nA forma da fila eh a seguinte:\n");
+        while (i != ((f->fim + 1) % TM))
+        {
+            printf("%d ", f->itens[i]);
+            i = (i + 1) % TM;
+        }
+    }
+    else
+    {
+        printf("\nErro. Pilha Vazia.");
+    }
+}
+
 int comprimentoFila(FILA *f) // Adaptação da função imprimir sem desenfilerar
 {
     int i = (f->inicio + 1) % TM;
@@ -90,7 +108,7 @@ int comprimentoFila(FILA *f) // Adaptação da função imprimir sem desenfilera
         while (i != ((f->fim + 1) % TM))
         {
             qnt++;
-           // printf("%d ", f->itens[i]); Verificar se realmente possui valores na fila
+            // printf("%d ", f->itens[i]); Verificar se realmente possui valores na fila
             i = (i + 1) % TM;
         }
     }
@@ -104,14 +122,23 @@ int comprimentoFila(FILA *f) // Adaptação da função imprimir sem desenfilera
 int compararFilas(FILA *f1, FILA *f2)
 {
     int a, b;
-    while (!verificarFila(f2))
-    {
-        a = dequeue(f2);
-        b = dequeue(f1);
-    }
-    
-}
 
+    a = comprimentoFila(f1);
+    b = comprimentoFila(f2);
+
+    if (a > b)
+    {
+        return 1;
+    }
+    else if (a < b)
+    {
+        return 2;
+    }
+    else
+    {
+        return 0;
+    }
+}
 
 void preencherFila(FILA *f, int n)
 {
@@ -121,20 +148,80 @@ void preencherFila(FILA *f, int n)
     }
 }
 
+int gerirMenu()
+{
+    int opcao;
+    printf("\n----------\n\tOPERACOES SOBRE FILAS ESTATICAS");
+    printf("\nEscolha a operacao desejada, informando o codigo correpondente.\n");
+    printf("\n1 -\tInserir elementos na fila F1;");
+    printf("\n2 -\tInserir elementos na fila F2;");
+    printf("\n3 -\tComparar Filas;");
+    printf("\n4 -\tImpressao: Fila F1;");
+    printf("\n5 -\tImpressao: Fila F2;");
+    printf("\n0 -\tEncerrar Sistema.\n");
+
+    do
+    {
+        printf("Escolha ==>   ");
+        scanf("%d", &opcao);
+    } while (opcao < 0 || opcao > 5);
+    return opcao;
+}
+
 int main()
 {
     srand(time(NULL));
     FILA filaF1, filaF2;
+    int opcao;
 
-    fila_Inicializar(&filaF1);
-    fila_Inicializar(&filaF2);
+    do
+    {
+        opcao = gerirMenu();
+        switch (opcao)
+        {
+        case 1:
+            printf("\nInserir elementos na fila F1.");
+            printf("\nUma fila F1 foi criada e preenchida com um numero aleatorio de elementos.\n");
+            fila_Inicializar(&filaF1);
+            preencherFila(&filaF1, rand() % (TM - 1));
+            break;
 
-    printf("Uma fila F1 foi criada e preenchida com um numero aleatorio de elementos.\n");
-    preencherFila(&filaF1, rand() % (TM - 1));
+        case 2:
+            printf("\nInserir elementos na fila F2.");
+            printf("\nUma fila F2 foi criada e preenchida com um numero aleatorio de elementos.\n");
+            fila_Inicializar(&filaF2);
+            preencherFila(&filaF2, rand() % (TM - 1));
+            break;
 
-    printf("Uma fila F2 foi criada e preenchida com um numero aleatorio de elementos.\n");
-    preencherFila(&filaF2, rand() % (TM - 1));
-    
+        case 3:
+            printf("\nComparar filas.");
+            switch (compararFilas(&filaF1, &filaF2))
+            {
+            case 1:
+                printf("\nFila F1 maior que a fila F2.");
+                break;
+
+            case 2:
+                printf("\nFila F1 menor que a fila F2.");
+                break;
+
+            default:
+                printf("\nFila F1 e fila F2 possuem a mesma quantidade de elementos.");
+                break;
+            }
+            break;
+
+        case 4:
+            printf("\nImpressao da fila F1:\n\tA Fila F1 possuiu %d elementos", comprimentoFila(&filaF1));
+            imprimirFila(&filaF1);
+            break;
+
+        case 5:
+            printf("\nImpressao da fila F2:\n\tA Fila F2 possuiu %d elementos", comprimentoFila(&filaF2));
+            imprimirFila(&filaF2);
+            break;
+        }
+    } while (opcao != 0);
 
     return 0;
 }

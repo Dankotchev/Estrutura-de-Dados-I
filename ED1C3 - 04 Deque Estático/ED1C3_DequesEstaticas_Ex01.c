@@ -12,7 +12,7 @@
     Observação: Defina uma função menu.
 
     Autor: Danilo Domingues Quirino
-    Versão: 2203.
+    Versão: 2203.17
 */
 
 #include <stdio.h>
