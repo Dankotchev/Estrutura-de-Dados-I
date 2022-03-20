@@ -4,15 +4,16 @@
     dos elementos de uma fila.
 
     Autor: Danilo Domingues Quirino
-    Versão: 2203.
+    Versão: 2203.19
 */
 
 #include <stdio.h>
+#include <ctype.h>
 #define TM 100
 
 typedef struct sfila
 {
-    int itens[TM];
+    float itens[TM];
     int inicio, fim;
 } FILA;
 
@@ -29,7 +30,7 @@ int verificarFila(FILA *f)
     return 0;
 }
 
-void queue(FILA *f, int x)
+void queue(FILA *f, float x)
 {
     // Incrementar
     if (f->fim == (TM - 1))
@@ -55,10 +56,8 @@ void queue(FILA *f, int x)
     f->itens[f->fim] = x;
 }
 
-int dequeue(FILA *f)
+float dequeue(FILA *f)
 {
-    int x;
-
     if (!verificarFila(f))
     {
         if (f->inicio == TM - 1)
@@ -69,67 +68,85 @@ int dequeue(FILA *f)
         {
             f->inicio++;
         }
-        x = f->itens[f->inicio];
     }
     else
     {
         printf("Erro. Fila Vazia");
     }
-    return x;
+    return f->itens[f->inicio];
 }
 
-int maiorValor(FILA *f)
+void imprimirFila(FILA *f)
 {
-    FILA auxF;
-    int auxV, maior = f->itens[f->inicio];
+    int i = (f->inicio + 1) % TM;
+    if (!verificarFila(f))
+    {
+        printf("\nA forma da fila eh a seguinte:\n");
+        while (i != ((f->fim + 1) % TM))
+        {
+            printf("%.2f ", f->itens[i]);
+            i = (i + 1) % TM;
+        }
+    }
+    else
+    {
+        printf("\nErro. Pilha Vazia.");
+    }
+}
 
-    // Encontando o maior valor, removendo itens por itens e quardando em uma fila auxiliar
+float maiorValor(FILA *f)
+{
+    FILA filaAuxiliar;
+    float valorAtual, maior = f->itens[f->inicio];
+
+    // Encontrando o maior valor, removendo itens por itens e guardando em uma fila auxiliar
     while (!verificarFila(f))
     {
-        auxV = dequeue(f);
-        if (auxV > maior)
+        valorAtual = dequeue(f);
+        if (valorAtual > maior)
         {
-            maior = auxV;
+            maior = valorAtual;
         }
-        queue(&auxF, auxV);
+        queue(&filaAuxiliar, valorAtual);
     }
 
     // Devolvendo os itens da fila auxiliar para a principal
-    while (!verificarFila(&auxF))
+    while (!verificarFila(&filaAuxiliar))
     {
-        queue(f, dequeue(&auxF));
+        queue(f, dequeue(&filaAuxiliar));
     }
     return maior;
 }
 
-int menorValor(FILA *f)
+float menorValor(FILA *f)
 {
-    FILA auxF;
-    int auxV, menor = f->itens[f->inicio];
+    FILA filaAuxiliar;
+    float valorAtual, menor = f->itens[f->inicio];
 
-    // Encontando o menor valor, removendo itens por itens e quardando em uma fila auxiliar
+    // Encontrando o menor valor, removendo itens por itens e guardando em uma fila auxiliar
     while (!verificarFila(f))
     {
-        auxV = dequeue(f);
-        if (auxV < menor)
+        valorAtual = dequeue(f);
+        if (valorAtual < menor)
         {
-            menor = auxV;
+            menor = valorAtual;
         }
-        queue(&auxF, auxV);
+        queue(&filaAuxiliar, valorAtual);
     }
 
     // Devolvendo os itens da fila auxiliar para a principal
-    while (!verificarFila(&auxF))
+    while (!verificarFila(&filaAuxiliar))
     {
-        queue(f, dequeue(&auxF));
+        queue(f, dequeue(&filaAuxiliar));
     }
     return menor;
 }
 
 float mediaValor(FILA *f)
 {
-    int somatorio = 0, contagem = 0;
-    int x;
+    float somatorio = 0, x;
+    int contagem = 0;
+
     FILA aux;
 
     fila_Inicializar(&aux);
@@ -138,7 +155,7 @@ float mediaValor(FILA *f)
     {
         x = dequeue(f);
         somatorio += x;
-        contagem ++;
+        contagem++;
         queue(&aux, x);
     }
 
@@ -148,7 +165,23 @@ float mediaValor(FILA *f)
     }
 
     return somatorio / contagem;
-    
+}
+
+void inserirElementosFila(FILA *f)
+{
+    char continuar;
+    float valor;
+    do
+    {
+        printf("\nInforme um valor: ");
+        scanf("%f", &valor);
+        queue(f, valor);
+
+        printf("\nDeseja inserir outro elemento?\n\tS - Sim\n\tN - Nao\n\tEscolha: ");
+        fflush(stdin);
+        scanf("%c", &continuar);
+        continuar = toupper(continuar);
+    } while (continuar != 'N');
 }
 
 int gerirMenu()
@@ -157,17 +190,18 @@ int gerirMenu()
     printf("\n----------\n\tOPERACOES SOBRE FILAS ESTATICAS");
     printf("\nEscolha a operacao desejada, informando o codigo correpondente.\n");
     printf("\n1 -\tInserir elementos na fila;");
-    printf("\n2 -\tEncontrar o MENOR valor da fila;");
-    printf("\n3 -\tEncontrar o MAIOR valor da fila;");
-    printf("\n4 -\tMEDIA dos valores da fila;");
-    printf("\n5 -\tImpressao da fila;");
+    printf("\n2 -\tRemover elementos da fila;");
+    printf("\n3 -\tEncontrar o MENOR valor da fila;");
+    printf("\n4 -\tEncontrar o MAIOR valor da fila;");
+    printf("\n5 -\tMedia dos valores da fila;");
+    printf("\n6 -\tImpressao da fila;");
     printf("\n0 -\tEncerrar Sistema.\n");
 
     do
     {
         printf("Escolha ==>   ");
         scanf("%d", &opcao);
-    } while (opcao < 0 || opcao > 5);
+    } while (opcao < 0 || opcao > 6);
     return opcao;
 }
 
@@ -175,15 +209,42 @@ int main()
 {
     FILA f;
     int opcao;
+    float valor;
 
     fila_Inicializar(&f);
 
     do
     {
+        opcao = gerirMenu();
         switch (opcao)
         {
         case 1:
+            printf("\nInserir elementos na Fila.");
+            inserirElementosFila(&f);
+            break;
 
+        case 2:
+            printf("\nRemover elementos da Fila.");
+            printf("\nO elemento removido foi o %.2f", dequeue(&f));
+            break;
+
+        case 3:
+            // Não está apresentando nem o menor, nem o maior valor
+            valor = menorValor(&f);
+            printf("\nO Menor valor da fila eh %.2f", valor);
+            break;
+
+        case 4:
+            printf("\nO Maior valor na fila eh %.2f", maiorValor(&f));
+            break;
+
+        case 5:
+            printf("\nO valor medio dos elementos da fila eh %.2f", mediaValor(&f));
+            break;
+
+        case 6:
+            printf("\nImpressao da fila:");
+            imprimirFila(&f);
             break;
 
         case 0:

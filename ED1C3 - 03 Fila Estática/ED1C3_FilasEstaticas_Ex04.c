@@ -126,8 +126,6 @@ void queue(FILA *f, int x)
 
 int dequeue (FILA *f)
 {
-    int x;
-
     if (!verificarFila(f))
     {
         if (f->inicio == TM -1)
@@ -138,15 +136,13 @@ int dequeue (FILA *f)
         {
             f->inicio++;
         }
-        x = f->itens[f->inicio];
-        
     }
     else
     {
         printf("Erro. Fila Vazia");
     }
 
-    return x;
+    return f->itens[f->inicio];
 }
 
 void imprimirFila(FILA *f)
