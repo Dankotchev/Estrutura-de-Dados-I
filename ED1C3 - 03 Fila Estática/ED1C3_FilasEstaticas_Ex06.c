@@ -30,7 +30,7 @@ int verificarFila(FILA *f)
     return 0;
 }
 
-void queue(FILA *f, float x)
+void enqueue(FILA *f, float x)
 {
     // Incrementar
     if (f->fim == (TM - 1))
@@ -107,13 +107,13 @@ float maiorValor(FILA *f)
         {
             maior = valorAtual;
         }
-        queue(&filaAuxiliar, valorAtual);
+        enqueue(&filaAuxiliar, valorAtual);
     }
 
     // Devolvendo os itens da fila auxiliar para a principal
     while (!verificarFila(&filaAuxiliar))
     {
-        queue(f, dequeue(&filaAuxiliar));
+        enqueue(f, dequeue(&filaAuxiliar));
     }
     return maior;
 }
@@ -131,13 +131,13 @@ float menorValor(FILA *f)
         {
             menor = valorAtual;
         }
-        queue(&filaAuxiliar, valorAtual);
+        enqueue(&filaAuxiliar, valorAtual);
     }
 
     // Devolvendo os itens da fila auxiliar para a principal
     while (!verificarFila(&filaAuxiliar))
     {
-        queue(f, dequeue(&filaAuxiliar));
+        enqueue(f, dequeue(&filaAuxiliar));
     }
     return menor;
 }
@@ -156,12 +156,12 @@ float mediaValor(FILA *f)
         x = dequeue(f);
         somatorio += x;
         contagem++;
-        queue(&aux, x);
+        enqueue(&aux, x);
     }
 
     while (!verificarFila(&aux))
     {
-        queue(f, dequeue(&aux));
+        enqueue(f, dequeue(&aux));
     }
 
     return somatorio / contagem;
@@ -175,7 +175,7 @@ void inserirElementosFila(FILA *f)
     {
         printf("\nInforme um valor: ");
         scanf("%f", &valor);
-        queue(f, valor);
+        enqueue(f, valor);
 
         printf("\nDeseja inserir outro elemento?\n\tS - Sim\n\tN - Nao\n\tEscolha: ");
         fflush(stdin);

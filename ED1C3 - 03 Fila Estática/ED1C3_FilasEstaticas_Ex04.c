@@ -95,7 +95,7 @@ int verificarFila(FILA *f)
     return 0;
 }
 
-void queue(FILA *f, int x)
+void enqueue(FILA *f, int x)
 {
     // Incrementar
     if (f->fim == (TM - 1))
@@ -166,7 +166,7 @@ void preencherFila(FILA *f, int n)
 {
     for (int i = 0; i < n; i++)
     {
-        queue(f, rand() % 10);
+        enqueue(f, rand() % 10);
     }
 }
 
@@ -182,7 +182,7 @@ void inverterFila(FILA *f)
 
     while (!pilha_Vazia(&aux))
     {
-        queue(f, pop(&aux));
+        enqueue(f, pop(&aux));
     }
     
     

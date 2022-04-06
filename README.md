@@ -9,5 +9,6 @@ A disciplina ministrada pelo professor Marcelo Roberto Zorzan.
 ### - Revisão de Arrays e Estruturas em  C;
 ### - Listas Estáticas;
 ### - Pilhas Estáticas;
-### - Filas EStáticas;
-### - Deques EStáticas;
+### - Filas Estáticas;
+### - Deques Estáticas;
+### - Alocação Dinâmica;

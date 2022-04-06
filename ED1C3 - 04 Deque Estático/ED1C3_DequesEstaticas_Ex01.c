@@ -42,7 +42,7 @@ int validar(DEQUE *dq)
     }
 }
 
-void endQueue(DEQUE *dq, int x)
+void endEnqueue(DEQUE *dq, int x)
 {
     if (dq->fim == (TM - 1))
     {
@@ -91,7 +91,7 @@ int startDequeue(DEQUE *dq)
     return x;
 }
 
-void startQueue(DEQUE *dq, int x)
+void startEnqueue(DEQUE *dq, int x)
 {
 
     if (dq->inicio == 0)
@@ -169,12 +169,12 @@ void impressaoClassica(DEQUE *dq)
         while (!validar(dq))
         {
             x = startDequeue(dq);
-            endQueue(&aux, x);
+            endEnqueue(&aux, x);
             printf("%d ", x);
         }
         while (!validar(&aux))
         {
-            endQueue(dq, startDequeue(&aux));
+            endEnqueue(dq, startDequeue(&aux));
         }
     }
     else
@@ -219,13 +219,13 @@ int main()
         case 1:
             printf("\nInsercao de valores no inicio da Deque.\nInforme um valor: ");
             scanf("%d", &valor);
-            startQueue(&d, valor);
+            startEnqueue(&d, valor);
             break;
 
         case 2:
             printf("\nInsercao de valores no fim da Deque.\nInforme um valor: ");
             scanf("%d", &valor);
-            endQueue(&d, valor);
+            endEnqueue(&d, valor);
             break;
 
         case 3:

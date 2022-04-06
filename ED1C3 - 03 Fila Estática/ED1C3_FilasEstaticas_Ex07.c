@@ -75,7 +75,7 @@ int verificarFila(PASTA *ctlg)
     return 0;
 }
 
-void queue(PASTA *ctlg, FOLHA new)
+void enqueue(PASTA *ctlg, FOLHA new)
 {
     // Incrementar
     if (ctlg->fim == (TM - 1))
@@ -163,7 +163,7 @@ void inserirElementosFila(PASTA *ctlg)
         printf("Informe o Genero Musical: ");
         lerTexto(musicaNova.genero, TG - 1);
 
-        queue(ctlg, musicaNova);
+        enqueue(ctlg, musicaNova);
 
         if (!verificarFila(ctlg))
         {
@@ -183,7 +183,7 @@ FOLHA cantarMusica(PASTA *ctlg)
     FOLHA cantar;
 
     cantar = dequeue(ctlg); // Remover a primeira folha e tocar cantar a musica
-    queue(ctlg, cantar);    // Realocar a musica cantada para a ultima posição da pasta
+    enqueue(ctlg, cantar);    // Realocar a musica cantada para a ultima posição da pasta
     return cantar;
 }
 
