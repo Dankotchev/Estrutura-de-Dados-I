@@ -121,7 +121,7 @@ CELULA *pesquisar(CELULA *lista, int x)
     return NULL;
 }
 
-CELULA *buscarValorMF(CELULA *lista, int x)
+CELULA *buscarValorT(CELULA *lista, int x)
 {
     CELULA *buscarMover;
     CELULA *auxiliar;
@@ -202,7 +202,7 @@ int main()
 
         case 3:
             printf("\nBuscar e Apresentar um valor da Lista.\n");
-            lista = buscarValorMF(lista, leituraValor());
+            lista = buscarValorT(lista, leituraValor());
             break;
 
         case 4:
