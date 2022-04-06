@@ -1,14 +1,9 @@
 /*
-    EXERCÍCIO 00:
-    Crie um arquivo e implementar as seguintes informação de uma lista linear dinâmica:
-        * init
-        * getnode
-        * freenode
-        * vazia
-        * exibe_lista
-        * insere_inicio, insere_fim
-        * remove_inicio, remove_valor
-        * pesquisa
+    EXERCÍCIO "Transposição":
+    Implementar os seguintes métodos de busca para listas auto-organizadas:
+        a) Mover para frente
+        b) Transposição
+        c) Contagem
 
     Autor: Danilo Domingues Quirino
     Versão: 2204.17
@@ -109,48 +104,6 @@ CELULA *inserirFim(CELULA *lista, int x)
     }
 }
 
-CELULA *removerInicio(CELULA *lista)
-{
-    CELULA *remover;
-
-    remover = lista;
-    if (!listaVazia(lista))
-    {
-        lista = remover->next;
-        freeNode(remover);
-        return lista;
-    }
-    else
-    {
-        printf("Erro, lista vazia.");
-        return NULL;
-    }
-}
-
-CELULA *removerFim(CELULA *lista)
-{
-    CELULA *remover;
-    CELULA *anterior;
-
-    if (!listaVazia(lista))
-    {
-        remover = lista;
-        while (remover->next != NULL)
-        {
-            anterior = remover;
-            remover = remover->next;
-        }
-        anterior->next = NULL;
-        freeNode(remover);
-        return lista;
-    }
-    else
-    {
-        printf("\nErro, lista vazia");
-        return NULL;
-    }
-}
-
 CELULA *pesquisar(CELULA *lista, int x)
 {
     CELULA *procurar;
@@ -168,50 +121,52 @@ CELULA *pesquisar(CELULA *lista, int x)
     return NULL;
 }
 
-CELULA *removerValor(CELULA *lista, int x)
+CELULA *buscarValorT(CELULA *lista, int x)
 {
-    CELULA *remover;
-    CELULA *auxiliar;
+    CELULA *buscarMover;
+    CELULA *auxiliar, *anterior;
 
-    if ((remover = pesquisar(lista, x)) != NULL)
+    if ((buscarMover = pesquisar(lista, x)) != NULL)
     {
-        auxiliar = lista;
-        if (auxiliar == remover)
+        auxiliar = lista; 
+        if (auxiliar != buscarMover)
         {
-            lista = removerInicio(lista);
-            return lista;
-        }
-
-        else
-        {
-            while (auxiliar->next != remover)
+            while (auxiliar->next != buscarMover)
+            {
+                anterior= auxiliar;
                 auxiliar = auxiliar->next;
-            auxiliar->next = remover->next;
-            freeNode(remover);
+            }
+            auxiliar->next = auxiliar->next->next;
+            buscarMover->next = auxiliar;
+            anterior->next = buscarMover;
         }
+        exibirLista(lista);
         return lista;
     }
-    return NULL;
+    else
+    {
+        printf("\nErro, valor nao encontrado na lista.");
+        return NULL;
+    }
 }
 
 int gerirMenu()
 {
     int opcao;
-    printf("\n----------\n\tOPERACOES SOBRE LISTAS DINAMICAS");
+    printf("\n----------\n\tOPERACOES SOBRE LISTAS DINAMICAS AUTO-ORGANIZADAS");
+    printf("\n\t\tMETODO DE BUSCA: TRANSPOSICAO");
     printf("\nEscolha a operacao desejada, informando o codigo correpondente.\n");
     printf("\n1 -\tInserir valores no Inicio da Lista;");
     printf("\n2 -\tInserir valores no Fim da lista;");
-    printf("\n3 -\tRemover valores no Inicio da Lista;");
-    printf("\n4 -\tRemover valores no Fim da Lista;");
-    printf("\n5 -\tRemover um valor especifico da Lista;");
-    printf("\n6 -\tExibir a Lista completa;");
+    printf("\n3 -\tBuscar um valor na Lista e Apresentar a Lista;");
+    printf("\n4 -\tExibir a Lista completa;");
     printf("\n0 -\tEncerrar Sistema.\n");
 
     do
     {
         printf("Escolha ==>   ");
         scanf("%d", &opcao);
-    } while (opcao < 0 || opcao > 6);
+    } while (opcao < 0 || opcao > 4);
     return opcao;
 }
 
@@ -247,21 +202,11 @@ int main()
             break;
 
         case 3:
-            printf("\nRemocao de valores a partir do Inicio da Lista.\n");
-            lista = removerInicio(lista);
+            printf("\nBuscar e Apresentar um valor da Lista.\n");
+            lista = buscarValorT(lista, leituraValor());
             break;
 
         case 4:
-            printf("\nRemocao de valores a partir do Fim da Lista.\n");
-            lista = removerFim(lista);
-            break;
-
-        case 5:
-            printf("\nRemover um valor especifico da lista.\n");
-            lista = removerValor(lista, leituraValor());
-            break;
-
-        case 6:
             printf("\nExibir a lista.\n");
             exibirLista(lista);
             break;
