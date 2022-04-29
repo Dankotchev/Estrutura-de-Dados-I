@@ -1,17 +1,19 @@
 /*
-    EXERCÍCIO 00:
-    Crie um arquivo e implementar as seguintes informação de uma lista linear dinâmica:
-        * init
-        * getnode
-        * freenode
-        * vazia
-        * exibe_lista
-        * insere_inicio, insere_fim
-        * remove_inicio, remove_valor
-        * pesquisa
+    EXERCÍCIO 01:
+    Codifique, compile e execute um programa em Linguagem C que permita fazer as
+    seguintes operações sobre uma lista linear simplesmente encadeada formada por
+    elementos do tipo char usando a notação de ponteiro para ponteiro somente quando
+    for realmente necessário:
+        a. Inserir um elemento no início da lista;
+        b. Inserir um elemento no final da lista;
+        c. Remover um elemento do início da lista;
+        d. Remover um determinado elemento da lista;
+        e. Exibir os elementos da lista.
+
+    OBS: Defina funções para cada operação, incluindo uma função menu.
 
     Autor: Danilo Domingues Quirino
-    Versão: 2204.17
+    Versão: 2204.14
 */
 
 #include <stdio.h>
@@ -19,14 +21,13 @@
 
 typedef struct cell
 {
-    int info;
+    char letra;
     struct cell *next;
 } CELULA;
 
-CELULA *inicializar(CELULA *lista)
+void inicializar(CELULA **lista)
 {
-    lista = NULL;
-    return lista;
+    *lista = NULL;
 }
 
 CELULA *getNode()
@@ -48,37 +49,33 @@ int listaVazia(CELULA *lista)
 
 void exibirLista(CELULA *lista)
 {
-    CELULA *auxiliar;
-
-    auxiliar = lista;
-    while (auxiliar != NULL)
+    while (lista != NULL)
     {
-        printf("%d\t", auxiliar->info);
-        auxiliar = auxiliar->next;
+        printf("%c\t", lista->letra);
+        lista = lista->next;
     }
     printf("\n");
 }
 
-CELULA *inserirInicio(CELULA *lista, int x)
+void inserirInicio(CELULA **lista, char a)
 {
     CELULA *inserir;
 
     inserir = getNode();
     if (inserir != NULL)
     {
-        inserir->info = x;
-        inserir->next = lista;
-        lista = inserir;
-        return lista;
+        inserir->letra = a;
+        inserir->next = *lista;
+        *lista = inserir;
     }
     else
     {
         printf("\nErro na alocacao do no");
-        return NULL;
+        exit(1);
     }
 }
 
-CELULA *inserirFim(CELULA *lista, int x)
+void inserirFim(CELULA **lista, char a)
 {
     CELULA *inserir;
     CELULA *auxiliar;
@@ -86,55 +83,52 @@ CELULA *inserirFim(CELULA *lista, int x)
     inserir = getNode();
     if (inserir != NULL)
     {
-        inserir->info = x;
+        inserir->letra = a;
         inserir->next = NULL;
 
-        if (listaVazia(lista))
+        if (listaVazia(*lista))
         {
-            lista = inserir;
+            *lista = inserir;
         }
         else
         {
-            auxiliar = lista;
+            auxiliar = *lista;
             while (auxiliar->next != NULL)
                 auxiliar = auxiliar->next;
             auxiliar->next = inserir;
         }
-        return lista;
     }
     else
     {
         printf("\nErro na alocacao do no.");
-        return NULL;
+        exit(1);
     }
 }
 
-CELULA *removerInicio(CELULA *lista)
+void removerInicio(CELULA **lista)
 {
     CELULA *remover;
 
-    remover = lista;
-    if (!listaVazia(lista))
+    remover = *lista;
+    if (!listaVazia(*lista))
     {
-        lista = remover->next;
-        freeNode(remover);
-        return lista;
+        *lista = remover->next;
     }
     else
     {
         printf("Erro, lista vazia.");
-        return NULL;
+        exit(1);
     }
 }
 
-CELULA *removerFim(CELULA *lista)
+void removerFim(CELULA **lista)
 {
     CELULA *remover;
     CELULA *anterior;
 
-    if (!listaVazia(lista))
+    if (!listaVazia(*lista))
     {
-        remover = lista;
+        remover = *lista;
         while (remover->next != NULL)
         {
             anterior = remover;
@@ -142,16 +136,15 @@ CELULA *removerFim(CELULA *lista)
         }
         anterior->next = NULL;
         freeNode(remover);
-        return lista;
     }
     else
     {
         printf("\nErro, lista vazia");
-        return NULL;
+        exit(1);
     }
 }
 
-CELULA *pesquisar(CELULA *lista, int x)
+CELULA *pesquisar(CELULA *lista, char a)
 {
     CELULA *procurar;
 
@@ -160,7 +153,7 @@ CELULA *pesquisar(CELULA *lista, int x)
         procurar = lista;
         while (procurar != NULL)
         {
-            if (procurar->info == x)
+            if (procurar->letra == a)
                 return procurar;
             procurar = procurar->next;
         }
@@ -168,18 +161,17 @@ CELULA *pesquisar(CELULA *lista, int x)
     return NULL;
 }
 
-CELULA *removerValor(CELULA *lista, int x)
+int removerValor(CELULA **lista, char a)
 {
     CELULA *remover;
     CELULA *auxiliar;
 
-    if ((remover = pesquisar(lista, x)) != NULL)
+    if ((remover = pesquisar(*lista, a)) != NULL)
     {
-        auxiliar = lista;
+        auxiliar = *lista;
         if (auxiliar == remover)
         {
-            lista = removerInicio(lista);
-            return lista;
+            removerInicio(lista);
         }
 
         else
@@ -189,9 +181,9 @@ CELULA *removerValor(CELULA *lista, int x)
             auxiliar->next = remover->next;
             freeNode(remover);
         }
-        return lista;
+        return 1;
     }
-    return NULL;
+    return 0;
 }
 
 int gerirMenu()
@@ -199,11 +191,11 @@ int gerirMenu()
     int opcao;
     printf("\n----------\n\tOPERACOES SOBRE LISTAS DINAMICAS");
     printf("\nEscolha a operacao desejada, informando o codigo correpondente.\n");
-    printf("\n1 -\tInserir valores no Inicio da Lista;");
-    printf("\n2 -\tInserir valores no Fim da lista;");
-    printf("\n3 -\tRemover valores no Inicio da Lista;");
-    printf("\n4 -\tRemover valores no Fim da Lista;");
-    printf("\n5 -\tRemover um valor especifico da Lista;");
+    printf("\n1 -\tInserir caracter no Inicio da Lista;");
+    printf("\n2 -\tInserir caracter no Fim da lista;");
+    printf("\n3 -\tRemover caracter no Inicio da Lista;");
+    printf("\n4 -\tRemover caracter no Fim da Lista;");
+    printf("\n5 -\tRemover um caracter especifico da Lista;");
     printf("\n6 -\tExibir a Lista completa;");
     printf("\n0 -\tEncerrar Sistema.\n");
 
@@ -215,11 +207,12 @@ int gerirMenu()
     return opcao;
 }
 
-int leituraValor()
+char leituraCaracter()
 {
-    int v;
-    printf("\nInforme um valor :: ");
-    scanf("%d", &v);
+    char v;
+    fflush(stdin);
+    printf("\nInforme um caracter :: ");
+    scanf("%c", &v);
     return v;
 }
 
@@ -227,7 +220,7 @@ int main()
 {
 
     CELULA *lista;
-    lista = inicializar(lista);
+    inicializar(&lista);
     int opcao;
 
     do
@@ -238,27 +231,30 @@ int main()
         {
         case 1:
             printf("\nInsercao no Inicio da Lista.\n");
-            lista = inserirInicio(lista, leituraValor());
+            inserirInicio(&lista, leituraCaracter());
             break;
 
         case 2:
             printf("\nInsercao no Fim da Lista.\n");
-            lista = inserirFim(lista, leituraValor());
+            inserirFim(&lista, leituraCaracter());
             break;
 
         case 3:
             printf("\nRemocao de valores a partir do Inicio da Lista.\n");
-            lista = removerInicio(lista);
+            removerInicio(&lista);
             break;
 
         case 4:
             printf("\nRemocao de valores a partir do Fim da Lista.\n");
-            lista = removerFim(lista);
+            removerFim(&lista);
             break;
 
         case 5:
             printf("\nRemover um valor especifico da lista.\n");
-            lista = removerValor(lista, leituraValor());
+            if (removerValor(&lista, leituraCaracter()))
+                printf("Valor Removido.\n");
+            else
+                printf("Valor nao Removido.\n");
             break;
 
         case 6:
