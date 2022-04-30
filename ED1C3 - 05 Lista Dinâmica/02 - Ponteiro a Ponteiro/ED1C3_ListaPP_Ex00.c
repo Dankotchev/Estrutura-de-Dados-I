@@ -210,7 +210,8 @@ int gerirMenu()
 char leituraCaracter()
 {
     char v;
-    fflush(stdin);
+    //fflush(stdin);
+    __fpurge(stdin);
     printf("\nInforme um caracter :: ");
     scanf("%c", &v);
     return v;

@@ -104,23 +104,32 @@ CELULA *pesquisar(CELULA *lista, int x)
     return NULL;
 }
 
-CELULA *ordenar(CELULA *lista)
+CELULA *ordenar(CELULA *lista) // Ainda não está ok
 {
-    CELULA *atual, *proximo, *anterior;
+    CELULA *atual, *proximo, *auxiliar;
 
     atual = lista;
     while (atual != NULL)
     {
         proximo = atual->next;
-        anterior = atual;
-        if (atual->acessos > proximo->acessos)
+        while (proximo != NULL)
         {
-            atual->next = atual->next->next;
-            proximo->next = atual;
-            anterior->next = proximo;
+            if (atual->acessos < proximo->acessos)
+            {
+                auxiliar = atual->next;
+                atual->next = proximo->next;
+                proximo->next = auxiliar;
+            }
+            else
+            {
+                atual = proximo;
+            }
+            
+            proximo = proximo->next;
         }
-        atual->next = proximo;
+        atual = atual->next;
     }
+
     return lista;
 }
 
@@ -133,26 +142,6 @@ CELULA *buscarValorC(CELULA *lista, int x)
     {
         buscarMover->acessos++;
         lista = ordenar(lista);
-        // if (buscarMover != lista)
-        // {
-        //     auxiliar = lista;
-        //     if (auxiliar != buscarMover)
-        //     {
-        //         while (auxiliar->next != buscarMover)
-        //         {
-        //             anterior = auxiliar;
-        //             auxiliar = auxiliar->next;
-        //         }
-        //         buscarMover->acessos
-        //         else
-        //         {
-        //             buscarMover->acessos++;
-        //             auxiliar->next = auxiliar->next->next;
-        //             buscarMover->next = auxiliar;
-        //             anterior->next = buscarMover;
-        //             lista = ordenar(lista);
-        //         }
-        //     }
         exibirLista(lista);
         return lista;
     }

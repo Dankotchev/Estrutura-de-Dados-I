@@ -6,9 +6,14 @@ A disciplina ministrada pelo professor Marcelo Roberto Zorzan.
 
 ## _Conteúdo Abordado_:
 
-### - Revisão de Arrays e Estruturas em  C;
-### - Listas Estáticas;
-### - Pilhas Estáticas;
-### - Filas Estáticas;
-### - Deques Estáticas;
-### - Alocação Dinâmica;
+- Revisão de Arrays e Estruturas em  C;
+- Listas Estáticas;
+- Pilhas Estáticas;
+- Filas Estáticas;
+- Deques Estáticas;
+- Alocação (Listas) Dinâmica;
+- Listas Dinâmicas;
+  - Lista Ponteiro-Ponteiro Dinâmica;
+  - Lista Ponteiro a Ponteiro;
+  - Lista Circular (e com Cabeçalho);
+  - Lista [Circular] Duplamente Encadeada
