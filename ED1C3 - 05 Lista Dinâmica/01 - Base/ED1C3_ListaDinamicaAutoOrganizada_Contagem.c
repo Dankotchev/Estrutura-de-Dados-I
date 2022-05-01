@@ -78,6 +78,7 @@ CELULA *inserirFim(CELULA *lista, int x)
                 auxiliar = auxiliar->next;
             auxiliar->next = inserir;
         }
+        // lista = ordenar(lista);
         return lista;
     }
     else
@@ -106,30 +107,45 @@ CELULA *pesquisar(CELULA *lista, int x)
 
 CELULA *ordenar(CELULA *lista) // Ainda não está ok
 {
-    CELULA *atual, *proximo, *auxiliar;
+    CELULA *atual, *anterior, *proximo, *aux;
 
     atual = lista;
+    // Segundo nível da organização, avançando uma posição a frente a cada iteração
     while (atual != NULL)
     {
-        proximo = atual->next;
-        while (proximo != NULL)
+        aux = lista;
+        anterior = NULL;
+        proximo = aux->next;
+
+        if (aux->next == NULL)
         {
-            if (atual->acessos < proximo->acessos)
+            return lista;
+        }
+        else
+        {
+            // Primeiro nível de organização, troca de apenas um unico valor de posição
+            while (proximo != NULL && (aux->acessos < proximo->acessos))
             {
-                auxiliar = atual->next;
-                atual->next = proximo->next;
-                proximo->next = auxiliar;
+                anterior = aux;
+                aux = proximo;
+                proximo = aux->next;
             }
-            else
+            if (anterior == NULL) // Se acontecer na primeira posição da lista
             {
-                atual = proximo;
+                anterior = proximo->next;
+                proximo->next = aux;
+                aux->next = anterior;
+                lista = proximo;
             }
-            
-            proximo = proximo->next;
+            else if (proximo != NULL) // Acontecer a partir da segunda posição
+            {
+                anterior->next = proximo;
+                aux->next = proximo->next;
+                proximo->next = aux;
+            }
         }
         atual = atual->next;
     }
-
     return lista;
 }
 

@@ -90,47 +90,48 @@ CELULA *inserirOrdem(CELULA *lista, int x)
     }
 }
 
-CELULA *ordenar(CELULA *lista) // Ainda não está ok
+CELULA *ordenar(CELULA *lista) // AOK, funcionando
 {
     CELULA *atual, *anterior, *proximo, *aux;
 
     atual = lista;
-    anterior = NULL;
-    proximo = atual->next;
 
-    if (atual->next == NULL)
+    // Segundo nível da organização, avançando uma posição a frente a cada iteração
+    while (atual != NULL)
     {
-        return lista;
-    }
-    else
-    {
-        // Primeiro nível de organização, troca de apenas um unico valor de posição
-        while (proximo != NULL && (atual->info < proximo->info))
-        {
-            anterior = atual;
-            atual = proximo;
-            proximo = atual->next;
+        aux = lista;
+        anterior = NULL;
+        proximo = aux->next;
 
-            // anterior = atual;
-            // proximo = atual->next;
-            // atual = proximo;
-        }
-        if (anterior == NULL) // Se acontecer na primeira posição da lista
+        if (aux->next == NULL)
         {
-            anterior = proximo->next;
-            proximo->next = atual;
-            atual->next = anterior;
-            lista = proximo;
+            return lista;
         }
-        else if (proximo != NULL) // Acontecer a partir da segunda posição
+        else
         {
-            anterior->next = proximo;
-            atual->next = proximo->next;
-            proximo->next = atual;
+            // Primeiro nível de organização, troca de apenas um unico valor de posição
+            while (proximo != NULL && (aux->info < proximo->info))
+            {
+                anterior = aux;
+                aux = proximo;
+                proximo = aux->next;
+            }
+            if (anterior == NULL) // Se acontecer na primeira posição da lista
+            {
+                anterior = proximo->next;
+                proximo->next = aux;
+                aux->next = anterior;
+                lista = proximo;
+            }
+            else if (proximo != NULL) // Acontecer a partir da segunda posição
+            {
+                anterior->next = proximo;
+                aux->next = proximo->next;
+                proximo->next = aux;
+            }
         }
-        proximo = atual->next;
+        atual = atual->next;
     }
-
     return lista;
 }
 
@@ -192,7 +193,7 @@ CELULA *buscarValorC(CELULA *lista, int x)
     if ((buscarMover = pesquisar(lista, x)) != NULL)
     {
         buscarMover->acessos++;
-        // lista = ordenar(lista);
+        lista = ordenar(lista);
         exibirLista(lista);
         return lista;
     }
@@ -243,7 +244,7 @@ int main()
         case 1:
             printf("\nInsercao na Lista.\n");
             lista = inserirFim(lista, leituraValor());
-            // lista = inserirOrdem(lista, leituraValor());
+            //lista = inserirOrdem(lista, leituraValor());
             break;
 
         case 2:
