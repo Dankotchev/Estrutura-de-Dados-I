@@ -1,9 +1,6 @@
 /*
     EXERCÍCIO "Contagem":
-    Implementar os seguintes métodos de busca para listas auto-organizadas:
-        a) Mover para frente
-        b) Transposição
-        c) Contagem
+    Implementar Lista Dinâmica auto ordenada;
 
     Autor: Danilo Domingues Quirino
     Versão: 2205.02
@@ -55,6 +52,94 @@ void exibirLista(CELULA *lista)
     printf("\n");
 }
 
+CELULA *inserirOrdem(CELULA *lista, int x)
+{
+    CELULA *atual, *anterior, *inserir;
+    inserir = getNode();
+
+    if (inserir != NULL)
+    {
+        inserir->info = x;
+        inserir->next = NULL;
+
+        atual = lista;
+        anterior = NULL;
+
+        while (atual != NULL && atual->info < x)
+        {
+            anterior = atual;
+            atual = atual->next;
+        }
+        if (atual == lista)
+        {
+            inserir->next = lista;
+            lista = inserir;
+        }
+        else
+        {
+            anterior->next = inserir;
+            inserir->next = atual;
+        }
+
+        return lista;
+    }
+    else
+    {
+        printf("Erro na alocacao do no");
+        return NULL;
+    }
+}
+
+CELULA *ordenar(CELULA *lista) // AOK, funcionando
+{
+    CELULA *atual, *anterior, *proximo, *aux;
+    int c = 1;
+
+    aux = lista;
+    if (aux->next == NULL)
+        return lista;
+
+    // Segundo nível da organização, avançando uma posição a frente a cada iteração
+    while (aux != NULL)
+    {
+        atual = lista;
+        anterior = NULL;
+        proximo = atual->next;
+        c = 1;
+
+        while (c == 1)
+        {
+            if (proximo != NULL)
+            {
+                if (atual->info > proximo->info)
+                {
+                    if (anterior == NULL) // Se acontecer na primeira posição da lista
+                    {
+                        anterior = proximo->next;
+                        proximo->next = atual;
+                        atual->next = anterior;
+                        lista = proximo;
+                    }
+                    else // Acontecer a partir da segunda posição
+                    {
+                        anterior->next = proximo;
+                        atual->next = proximo->next;
+                        proximo->next = atual;
+                    }
+                    c = 1;
+                }
+                anterior = atual;
+                atual = proximo;
+                proximo = atual->next;
+            }
+            c = 0;
+            atual = atual->next;
+        }
+        aux = aux->next;
+    }
+    return lista;
+}
+
 CELULA *inserirFim(CELULA *lista, int x)
 {
     CELULA *inserir;
@@ -78,6 +163,7 @@ CELULA *inserirFim(CELULA *lista, int x)
                 auxiliar = auxiliar->next;
             auxiliar->next = inserir;
         }
+        lista = ordenar(lista);
         return lista;
     }
     else
@@ -102,50 +188,6 @@ CELULA *pesquisar(CELULA *lista, int x)
         }
     }
     return NULL;
-}
-
-CELULA *ordenar(CELULA *lista) // Ainda não está ok
-{
-    CELULA *atual, *anterior, *proximo, *aux;
-
-    aux = lista;
-    // Segundo nível da organização, avançando uma posição a frente a cada iteração
-    while (aux != NULL)
-    {
-        atual = lista;
-        anterior = NULL;
-        proximo = atual->next;
-
-        if (atual->next == NULL)
-        {
-            return lista;
-        }
-        else
-        {
-            // Primeiro nível de organização, troca de apenas um unico valor de posição
-            while (proximo != NULL && (atual->acessos > proximo->acessos))
-            {
-                anterior = atual;
-                atual = proximo;
-                proximo = atual->next;
-            }
-            if (anterior == NULL) // Se acontecer na primeira posição da lista
-            {
-                anterior = proximo->next;
-                proximo->next = atual;
-                atual->next = anterior;
-                lista = proximo;
-            }
-            else if (proximo != NULL) // Acontecer a partir da segunda posição
-            {
-                anterior->next = proximo;
-                atual->next = proximo->next;
-                proximo->next = atual;
-            }
-        }
-        aux = aux->next;
-    }
-    return lista;
 }
 
 CELULA *buscarValorC(CELULA *lista, int x)
@@ -207,6 +249,7 @@ int main()
         case 1:
             printf("\nInsercao na Lista.\n");
             lista = inserirFim(lista, leituraValor());
+            // lista = inserirOrdem(lista, leituraValor());
             break;
 
         case 2:
