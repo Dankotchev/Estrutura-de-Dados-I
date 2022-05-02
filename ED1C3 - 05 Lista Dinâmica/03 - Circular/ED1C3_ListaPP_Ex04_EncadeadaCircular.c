@@ -7,7 +7,7 @@
         Operações: init; getnode, freenode, insere_fim, listar, remove_inicio
 
     Autor: Danilo Domingues Quirino
-    Versão: 2204.30
+    Versão: 2205.02
 */
 
 #include <ctype.h>
@@ -17,7 +17,7 @@
 typedef struct sCell
 {
     int valor;
-    struct cell *next;
+    struct sCell *next;
 } CPONTO;
 
 void inicializar(CPONTO **lista)
@@ -52,10 +52,9 @@ void exibir(CPONTO *lista)
     {
         do
         {
-            printf("%d\t",exibir->valor);
+            printf("%d\t", exibir->valor);
             exibir = exibir->next;
-        } while (exibir != lista->next);
-        
+        } while (exibir != (CPONTO *)lista->next);
     }
     else
     {
@@ -71,13 +70,14 @@ void inserirFim(CPONTO **lista, int x)
     inserir = getNode();
     if (inserir != NULL)
     {
+        inserir->valor = x;
         if (listaVazia(*lista))
         {
             inserir->next = inserir;
         }
         else
         {
-            inserir->next = (*lista)->next;
+            inserir->next = (*lista)->next; //Novo nó aponta para onde o ultimo nó apontava, ou seja, o primeiro nó da lista
             (*lista)->next = inserir;
         }
         *lista = inserir;
@@ -89,32 +89,29 @@ void inserirFim(CPONTO **lista, int x)
     }
 }
 
-int removerInicio(CPONTO **lista)
+int removerInicio(CPONTO ***lista)
 {
     CPONTO *auxiliar;
     int valor;
 
-    if (!listaVazia(*lista))
+    if (!listaVazia(**lista))
     {
-        if ((*lista) == (*lista)->next)
+        if ((**lista) == (**lista)->next)
         {
-            valor = (*lista)->valor;
-            freeNode(*lista);
-            *lista = NULL;
+            valor = (**lista)->valor;
+            freeNode(**lista);
+            **lista = NULL;
         }
         else
         {
-            auxiliar = (*lista)->next;
+            auxiliar = (**lista)->next;
             valor = auxiliar->valor;
-            (*lista)->next = auxiliar->next;
+            (**lista)->next = auxiliar->next;
             freeNode(auxiliar);
         }
     }
     else
-    {
-        printf("Erro, lista Vazia\n");
-        return;
-    }
+        return NULL;
     return valor;
 }
 
@@ -143,6 +140,20 @@ int gerirMenu()
     return op;
 }
 
+void removerValor(CPONTO **lista)
+{
+    int val;
+    printf("\n\tRemover Valor :: \n");
+    val = removerInicio(&lista);
+    if (val != NULL)
+
+        printf("Valor %d removido.", val);
+
+    else
+
+        printf("Erro, lista vazia, nenhum valor removido.");
+}
+
 int main()
 {
     CPONTO *lista;
@@ -161,7 +172,7 @@ int main()
             break;
 
         case 2:
-            printf("\n\tRemover Valor :: \nValor %d removido.", removerInicio(&lista));
+            removerValor(&lista);
             break;
 
         case 3:
