@@ -1,9 +1,9 @@
 /*
     EXERCÍCIO 03:
-    Codifique, compile e execute um programa em Linguagem C que implemente as informações
-    abaixo de uma lista simplesmente encadeada circular formada por elementos do tipo
-    inteiro. Teste seu programa criando um menu com as opções de inserir, remover
-    e exibir.
+    Codifique, compile e execute um programa em Linguagem C que implemente as informações abaixo
+    de uma lista simplesmente encadeada circular com nó cabeçalho formada por elementos do
+    tipo inteiro positivo. Teste seu programa criando um menu com as opções de inserir,
+    remover e exibir.
         Operações: init; getnode, freenode, insere_fim, listar, remove_inicio
 
     Autor: Danilo Domingues Quirino
@@ -48,13 +48,13 @@ void exibir(CPONTO *lista)
 
     exibir = lista->next;
 
-    if (exibir != NULL)
+    if (exibir->valor >= 0)
     {
         do
         {
             printf("%d\t", exibir->valor);
             exibir = exibir->next;
-        } while (exibir != (CPONTO *)lista->next);
+        } while (exibir->valor >= 0);
     }
     else
     {
@@ -65,7 +65,7 @@ void exibir(CPONTO *lista)
 
 void inserirFim(CPONTO **lista, int x)
 {
-    CPONTO *inserir;
+    CPONTO *inserir, *auxiliar;
 
     inserir = getNode();
     if (inserir != NULL)
@@ -74,13 +74,17 @@ void inserirFim(CPONTO **lista, int x)
         if (listaVazia(*lista))
         {
             inserir->next = inserir;
+            (*lista) = inserir;
         }
         else
         {
-            inserir->next = (*lista)->next; //Novo nó aponta para onde o ultimo nó apontava, ou seja, o primeiro nó da lista
-            (*lista)->next = inserir;
+            auxiliar = (*lista)->next;
+            while (auxiliar->valor >= 0)
+                auxiliar = auxiliar->next;
+
+            auxiliar->next = inserir;
+            inserir->next = *lista; // resolver exibir e voltar para aqui
         }
-        *lista = inserir;
     }
     else
     {
@@ -89,36 +93,38 @@ void inserirFim(CPONTO **lista, int x)
     }
 }
 
-int removerInicio(CPONTO ***lista)
+void removerInicio(CPONTO **lista)
 {
     CPONTO *auxiliar;
-    int valor;
 
-    if (!listaVazia(**lista))
+    if (!listaVazia(*lista))
     {
-        if ((**lista) == (**lista)->next)
+        printf("\n\tRemover Valor :: \n");
+        if ((*lista) != (*lista)->next)
         {
-            valor = (**lista)->valor;
-            freeNode(**lista);
-            **lista = NULL;
+            auxiliar = (*lista)->next;
+            (*lista)->next = auxiliar->next;
+            freeNode(auxiliar);
+            
+            
+            freeNode(*lista);
+            *lista = NULL;
         }
         else
-        {
-            auxiliar = (**lista)->next;
-            valor = auxiliar->valor;
-            (**lista)->next = auxiliar->next;
-            freeNode(auxiliar);
-        }
+            printf("Erro, lista vazia, nao e possivel remover um valor.");
     }
     else
-        return NULL;
-    return valor;
+        printf("Erro, lista vazia, nao e possivel remover um valor.");
 }
 
 int lerValor()
 {
     int v;
-    scanf("%d", &v);
+    do
+    {
+        printf("Informe o Valor: ");
+        scanf("%d", &v);
+    } while (v < 0);
     return v;
 }
 
@@ -126,7 +132,7 @@ int gerirMenu()
 {
     int op;
     printf("\n----------\n\tOPERAÇÃO DE LISTA ENCADEADA CIRCULAR");
-    printf("\nEscolha a operacao desejada.\n");
+    printf("\n\t\t(com cabecalho)\nEscolha a operacao desejada.\n");
     printf("\n1 -\tInserir valor;");
     printf("\n2 -\tRemover valor;");
     printf("\n3 -\tApresentar Lista;");
@@ -140,26 +146,13 @@ int gerirMenu()
     return op;
 }
 
-void removerValor(CPONTO **lista)
-{
-    int val;
-    printf("\n\tRemover Valor :: \n");
-    val = removerInicio(&lista);
-    if (val != NULL)
-
-        printf("Valor %d removido.", val);
-
-    else
-
-        printf("Erro, lista vazia, nenhum valor removido.");
-}
-
 int main()
 {
     CPONTO *lista;
     int op;
 
     init(&lista);
+    inserirFim(&lista, -3425); // Inserir o nó de cabeçalho, u valor na primeira posição que não é valido
 
     do
     {
@@ -167,12 +160,12 @@ int main()
         switch (op)
         {
         case 1:
-            printf("\n\tInserir Valor :: \nInforme o Valor: ");
+            printf("\n\tInserir Valor ::\n");
             inserirFim(&lista, lerValor());
             break;
 
         case 2:
-            removerValor(&lista);
+            removerInicio(&lista);
             break;
 
         case 3:
