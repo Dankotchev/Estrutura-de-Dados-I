@@ -1,6 +1,11 @@
 /*
-    EXERCÍCIO 00:
-    Codifique, compile e execute um programa em Linguagem C que implemente um fila dinâmica.
+    EXERCÍCIO 11:
+    Desenvolva um programa para distribuição de senhas para o atendimento em um
+    consultório, que conta com uma única secretária e um único médico. Supondo que não
+    há desistências, seu programa deve apoiar as seguintes situações: (a) Ao chegar no
+    consultório, o paciente vai até a secretária e recebe uma senha numérica para ser
+    atendido. (b) Quando o médico fica disponível para atender a um novo paciente, a
+    secretária chama o paciente que está há mais tempo na fila.
 
     Autor: Danilo Domingues Quirino
     Versão: 2205.05
@@ -12,7 +17,7 @@
 
 typedef struct sCell
 {
-    int valor;
+    int senha;
     struct sCell *next;
 } NOH;
 
@@ -45,7 +50,7 @@ void enqueue(NOH **inicio, NOH **fim, int x)
     inserir = getNode();
     if(inserir != NULL)
     {
-        inserir->valor = x;
+        inserir->senha = x;
         inserir->next = NULL;
 
         if (empty(*inicio))
@@ -74,7 +79,7 @@ int dequeue (NOH **inicio, NOH **fim)
         if (*inicio == NULL)
             *fim = NULL;
 
-        x = remover->valor;
+        x = remover->senha;
         freeNode(remover);
     }
     else
@@ -85,21 +90,16 @@ int dequeue (NOH **inicio, NOH **fim)
     return x;
 }
 
-int lerValor()
-{
-    int v;
-    scanf("%d", &v);
-    return v;
-}
+
 
 int gerirMenu()
 {
     int op;
     printf("\n----------\n\tOPERACAO DE FILA DINAMICA");
     printf("\nEscolha a operacao desejada.\n");
-    printf("\n1 -\tInserir valor;");
-    printf("\n2 -\tRemover valor;");
-    printf("\n3 -\tApresentar o primeiro da fila;");
+    printf("\n1 -\tAtribuir Nova Senha");
+    printf("\n2 -\tChamar Senha");
+    printf("\n3 -\tApresentar Ultima Senha");
     printf("\n0 -\tEncerrar.\n");
 
     do
@@ -111,10 +111,24 @@ int gerirMenu()
     return op;
 }
 
+/*
+Apenas para validar o estado da lista
+void exibe (NOH *fila)
+{
+    printf("Estado da fila: \n");
+    while (fila != NULL)
+    {
+        printf("%d  ", fila->senha);
+        fila = fila->next;
+    }
+}
+*/
+
 int main()
 {
     NOH *inicio, *fim;
     int op;
+    int senhaAtual = 1, ultSenha;
 
     init(&inicio,&fim);
 
@@ -124,23 +138,25 @@ int main()
         switch (op)
         {
         case 1:
-            printf("\n\tInserir Valor ::\nInforme o Valor: ");
-            enqueue(&inicio,&fim, lerValor());
+            printf("\tAtribuicao de Senha :: Senha %d atribuida.\n", senhaAtual);
+            enqueue(&inicio,&fim, senhaAtual);
+            senhaAtual++;
             break;
 
         case 2:
-            printf("\n\tRemover Valor ::\nValor removido: %d", dequeue(&inicio, &fim));
+            ultSenha = dequeue(&inicio, &fim);
+            printf("\tChamando Senha: %d\n", ultSenha);
             break;
 
         case 3:
-            printf("\n\tApresentar a Lista ::\n");
-            //exibir(lista);
+            printf("\tApresentar Ultima Senha Chamada: %d\n", ultSenha);
             break;
 
         case 0:
             printf("Encerrando...");
             break;
         }
+        //exibe(inicio);
     }
     while (op != 0);
     return 0;

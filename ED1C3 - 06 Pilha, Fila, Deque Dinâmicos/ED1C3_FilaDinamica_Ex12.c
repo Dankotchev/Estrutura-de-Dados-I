@@ -1,6 +1,7 @@
 /*
-    EXERCÍCIO 00:
-    Codifique, compile e execute um programa em Linguagem C que implemente um fila dinâmica.
+    EXERCÍCIO 12:
+    Escreva um programa em Linguagem C que forneça o maior, o menor e a
+    média aritmética dos elementos de uma fila.
 
     Autor: Danilo Domingues Quirino
     Versão: 2205.05
@@ -9,10 +10,11 @@
 #include <ctype.h>
 #include <stdio.h>
 #include <stdlib.h>
+#include <time.h>
 
 typedef struct sCell
 {
-    int valor;
+    float valor;
     struct sCell *next;
 } NOH;
 
@@ -39,7 +41,7 @@ int empty(NOH *filaPointer)
     return 0;
 }
 
-void enqueue(NOH **inicio, NOH **fim, int x)
+void enqueue(NOH **inicio, NOH **fim, float x)
 {
     NOH *inserir;
     inserir = getNode();
@@ -62,10 +64,10 @@ void enqueue(NOH **inicio, NOH **fim, int x)
     }
 }
 
-int dequeue (NOH **inicio, NOH **fim)
+float dequeue (NOH **inicio, NOH **fim)
 {
     NOH *remover;
-    int x;
+    float x;
 
     if(!empty(*inicio))
     {
@@ -85,21 +87,15 @@ int dequeue (NOH **inicio, NOH **fim)
     return x;
 }
 
-int lerValor()
-{
-    int v;
-    scanf("%d", &v);
-    return v;
-}
+
 
 int gerirMenu()
 {
     int op;
     printf("\n----------\n\tOPERACAO DE FILA DINAMICA");
     printf("\nEscolha a operacao desejada.\n");
-    printf("\n1 -\tInserir valor;");
-    printf("\n2 -\tRemover valor;");
-    printf("\n3 -\tApresentar o primeiro da fila;");
+    printf("\n1 -\tInserir valores na fila");
+    printf("\n2 -\tMaior, Menor e Media");
     printf("\n0 -\tEncerrar.\n");
 
     do
@@ -111,10 +107,13 @@ int gerirMenu()
     return op;
 }
 
+
+
 int main()
 {
     NOH *inicio, *fim;
     int op;
+    int senhaAtual = 1, ultSenha;
 
     init(&inicio,&fim);
 
@@ -124,17 +123,28 @@ int main()
         switch (op)
         {
         case 1:
-            printf("\n\tInserir Valor ::\nInforme o Valor: ");
-            enqueue(&inicio,&fim, lerValor());
+            printf("\tAtribuicao de Senha :: Senha %d atribuida.\n", senhaAtual);
+            enqueue(&inicio,&fim, senhaAtual);
+            senhaAtual++;
             break;
 
         case 2:
-            printf("\n\tRemover Valor ::\nValor removido: %d", dequeue(&inicio, &fim));
+            ultSenha = dequeue(&inicio, &fim);
+            printf("\tChamando Senha: %d\n", ultSenha);
             break;
 
         case 3:
-            printf("\n\tApresentar a Lista ::\n");
-            //exibir(lista);
+            printf("\tImpressao nao classica de Fila: \n");
+            /*
+
+            printf("Estado da fila: \n");
+            while (fila != NULL)
+            {
+            printf("%d  ", fila->senha);
+            fila = fila->next;
+            }
+            }
+            */
             break;
 
         case 0:
