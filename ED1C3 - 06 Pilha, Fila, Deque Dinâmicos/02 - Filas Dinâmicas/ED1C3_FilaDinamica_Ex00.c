@@ -1,12 +1,11 @@
 /*
-    EXERCÕCIO 00:
-    Codifique, compile e execute um programa em Linguagem C que implemente um fila din‚mica.
+    EXERC√çCIO 00:
+    Codifique, compile e execute um programa em Linguagem C que implemente um fila din√¢mica.
 
     Autor: Danilo Domingues Quirino
-    Vers„o: 2205.05
+    Vers√£o: 2205.05
 */
 
-#include <ctype.h>
 #include <stdio.h>
 #include <stdlib.h>
 
