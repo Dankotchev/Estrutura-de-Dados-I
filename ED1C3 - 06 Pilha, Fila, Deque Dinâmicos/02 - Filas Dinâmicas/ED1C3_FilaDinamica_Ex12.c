@@ -1,16 +1,17 @@
 /*
-    EXERCÕCIO 12:
-    Escreva um programa em Linguagem C que forneÁa o maior, o menor e a
-    mÈdia aritmÈtica dos elementos de uma fila.
+    EXERC√çCIO 12:
+    Escreva um programa em Linguagem C que forne√ßa o maior, o menor e a
+    m√©dia aritm√©tica dos elementos de uma fila.
 
     Autor: Danilo Domingues Quirino
-    Vers„o: 2205.05
+    Vers√£o: 2205.06
 */
 
 #include <ctype.h>
 #include <stdio.h>
 #include <stdlib.h>
 #include <time.h>
+#include <unistd.h>
 
 typedef struct sCell
 {
@@ -45,7 +46,7 @@ void enqueue(NOH **inicio, NOH **fim, float x)
 {
     NOH *inserir;
     inserir = getNode();
-    if(inserir != NULL)
+    if (inserir != NULL)
     {
         inserir->valor = x;
         inserir->next = NULL;
@@ -64,17 +65,17 @@ void enqueue(NOH **inicio, NOH **fim, float x)
     }
 }
 
-float dequeue (NOH **inicio, NOH **fim)
+float dequeue(NOH ***inicio, NOH ***fim)
 {
     NOH *remover;
     float x;
 
-    if(!empty(*inicio))
+    if (!empty(**inicio))
     {
-        remover = *inicio;
-        *inicio = (*inicio)->next;
-        if (*inicio == NULL)
-            *fim = NULL;
+        remover = **inicio;
+        **inicio = (**inicio)->next;
+        if (**inicio == NULL)
+            **fim = NULL;
 
         x = remover->valor;
         freeNode(remover);
@@ -82,12 +83,53 @@ float dequeue (NOH **inicio, NOH **fim)
     else
     {
         printf("Erro, fila vazia.\n");
-        return NULL;
+        return;
     }
     return x;
 }
 
+void mediaMaiorMenor(NOH *inicio, NOH *fim)
+{
+    float menor, maior, somatorio = 0, media;
+    int qtd = 0;
+    float valorAtual;
 
+    if (!empty(inicio))
+    {
+        valorAtual = inicio->valor;
+        maior = valorAtual;
+        menor = valorAtual;
+        somatorio += valorAtual;
+        while (inicio != NULL)
+        {
+            valorAtual = inicio->valor;
+            somatorio += valorAtual;
+            qtd++;
+
+            if (maior < valorAtual)
+                maior = valorAtual;
+            if (menor > valorAtual)
+                menor = valorAtual;
+
+            inicio = inicio->next;
+        }
+    }
+    else
+        printf("Erro, fila vazia.\n");
+
+    media = somatorio / qtd;
+    printf("Menor valor: %0.2f.\n", menor);
+    printf("Maior valor: %0.2f.\n", maior);
+    printf("Media valores: %0.2f.\n", media);
+    printf("Soma valores: %0.2f.\n", somatorio);
+}
+
+int lerValor()
+{
+    int v;
+    scanf("%d", &v);
+    return v;
+}
 
 int gerirMenu()
 {
@@ -102,20 +144,19 @@ int gerirMenu()
     {
         printf("Escolha ==>   ");
         scanf("%d", &op);
-    }
-    while (op < 0 || op > 3);
+    } while (op < 0 || op > 2);
     return op;
 }
-
-
 
 int main()
 {
     NOH *inicio, *fim;
-    int op;
-    int senhaAtual = 1, ultSenha;
+    int op, entradas;
+    float valorAtual;
 
-    init(&inicio,&fim);
+    srand(time(NULL));
+
+    init(&inicio, &fim);
 
     do
     {
@@ -123,35 +164,25 @@ int main()
         switch (op)
         {
         case 1:
-            printf("\tAtribuicao de Senha :: Senha %d atribuida.\n", senhaAtual);
-            enqueue(&inicio,&fim, senhaAtual);
-            senhaAtual++;
+            printf("\tInsercao de Valores na fila :: \tInformes quantos valores inserir: ");
+            entradas = lerValor();
+            for (int i = 0; i < entradas; i++)
+            {
+                valorAtual = ((float)rand() / (float)(RAND_MAX)) * 100;
+                printf("\tInserindo na fila o numero %.2f.\n", valorAtual);
+                enqueue(&inicio, &fim, valorAtual);
+                sleep(1);
+            }
             break;
 
         case 2:
-            ultSenha = dequeue(&inicio, &fim);
-            printf("\tChamando Senha: %d\n", ultSenha);
-            break;
-
-        case 3:
-            printf("\tImpressao nao classica de Fila: \n");
-            /*
-
-            printf("Estado da fila: \n");
-            while (fila != NULL)
-            {
-            printf("%d  ", fila->senha);
-            fila = fila->next;
-            }
-            }
-            */
+            mediaMaiorMenor(inicio, fim);
             break;
 
         case 0:
             printf("Encerrando...");
             break;
         }
-    }
-    while (op != 0);
+    } while (op != 0);
     return 0;
 }
