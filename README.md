@@ -17,3 +17,4 @@ A disciplina ministrada pelo professor Marcelo Roberto Zorzan.
   - Lista Ponteiro a Ponteiro;
   - Lista Circular (e com Cabeçalho);
   - Lista [Circular] Duplamente Encadeada
+- Pilhas, Filas e Deques Dinâmicos

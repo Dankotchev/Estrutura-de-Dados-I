@@ -2,12 +2,14 @@
 ## Ponteiro para Ponteiro
 ### Exercício 01:
 
-Codifique, compile e execute um programa em Linguagem C que permita fazer as seguintes operações sobre uma lista linear simplesmente encadeada formada por elementos do tipo char usando a notação de ponteiro para ponteiro somente quando for realmente necessário: 
-    ​a) inserir um elemento no início da lista; 
-    ​b) inserir um elemento no final do lista;
-    ​c) remover um elemento do início da lista;
-    d) remover um elemento do final da lista;
-    e) exibir os elementos da lista.
+Codifique, compile e execute um programa em Linguagem C que permita fazer as seguintes operações sobre uma lista linear simplesmente encadeada formada por elementos do tipo char usando a notação de ponteiro para ponteiro somente quando for realmente necessário:
+
+​a) inserir um elemento no início da lista; 
+​b) inserir um elemento no final do lista;
+​c) remover um elemento do início da lista;
+d) remover um elemento do final da lista;
+e) exibir os elementos da lista.
+
 **Observação:** Defina funções para cada operação, incluindo uma função menu.
 
 ## Lista Ordenada
@@ -25,12 +27,14 @@ também que este sistema ficasse pronto até o dia da festa, para que fosse poss
 ### Exercício 04:
 
 Codifique, compile e execute um programa em Linguagem C que implemente as informações abaixo de uma lista simplesmente encadeada circular formada por elementos do tipo inteiro. Teste seu programa criando um menu com as opções de inserir, remover e exibir.
-    Operações: init; getNode; freeNode; inserie_fim; listar; remove_inicio
+
+Operações: init; getNode; freeNode; inserie_fim; listar; remove_inicio
 
 ### Exercício 05:
 
-Codifique, compile e execute um programa em Linguagem C que implemente as informações abaixo de uma lista simplesmente encadeada circular com nó cabeçalho formada por elementos do tipo inteiro positivo. Teste seu programa criando um menu com as opções de inserir, remover e exibir. 
-    Operações: init; getNode; freeNode; inserie_fim; listar; remove_inicio
+Codifique, compile e execute um programa em Linguagem C que implemente as informações abaixo de uma lista simplesmente encadeada circular com nó cabeçalho formada por elementos do tipo inteiro positivo. Teste seu programa criando um menu com as opções de inserir, remover e exibir.
+
+Operações: init; getNode; freeNode; inserie_fim; listar; remove_inicio
 
 ### Exercício 06:
 
@@ -40,12 +44,14 @@ Uma de suas manias ao assistir televisão é pegar o controle remoto e ficar pul
 ## Lista Duplamente Encadeada
 ### Exercício 07:
 
-Codifique, compile e execute um programa em Linguagem C que permita fazer as seguintes operações sobre uma lista linear duplamente encadeada: 
-    ​a) inserir um elemento no início da lista; 
-    ​b) inserir um elemento no final do lista;
-    ​c) remover um elemento do início da lista;
-    d) remover um elemento do final da lista;
-    e) exibir os elementos da lista.
+Codifique, compile e execute um programa em Linguagem C que permita fazer as seguintes operações sobre uma lista linear duplamente encadeada:
+
+​a) inserir um elemento no início da lista;
+​b) inserir um elemento no final do lista;
+​c) remover um elemento do início da lista;
+d) remover um elemento do final da lista;
+e) exibir os elementos da lista.
+
 **Observação:** Defina funções para cada operação, incluindo uma função menu.
 
 ### Exercício 08:
@@ -68,9 +74,11 @@ Codifique, compile e execute um programa em Linguagem C que implemente uma funç
 ### 04
 
 Defina, em linguagem C, a estrutura para um nó de uma lista ligada linear dinâmica que representa uma pessoa (nome, idade, cpf). Codifique, compile e execute um programa em Linguagem C que permita realizar as seguintes operações sobre uma lista linear dinâmica formada por elementos do tipo pessoa:
-    a. Adicionar uma nova pessoa na lista em ordem crescente de idade;
-    b. Remover uma pessoa pelo cpf;
-    c. Exibir todas as pessoas com idade maior que 25.
+
+a. Adicionar uma nova pessoa na lista em ordem crescente de idade;
+b. Remover uma pessoa pelo cpf;
+c. Exibir todas as pessoas com idade maior que 25.
+    
 **Observação:** Defina funções para cada operação.
 
 
