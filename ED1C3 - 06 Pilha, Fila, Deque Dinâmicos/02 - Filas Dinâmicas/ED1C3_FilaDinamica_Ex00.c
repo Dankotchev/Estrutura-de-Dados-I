@@ -98,7 +98,6 @@ int gerirMenu()
     printf("\nEscolha a operacao desejada.\n");
     printf("\n1 -\tInserir valor;");
     printf("\n2 -\tRemover valor;");
-    printf("\n3 -\tApresentar o primeiro da fila;");
     printf("\n0 -\tEncerrar.\n");
 
     do
@@ -106,7 +105,7 @@ int gerirMenu()
         printf("Escolha ==>   ");
         scanf("%d", &op);
     }
-    while (op < 0 || op > 3);
+    while (op < 0 || op > 2);
     return op;
 }
 
@@ -129,11 +128,6 @@ int main()
 
         case 2:
             printf("\n\tRemover Valor ::\nValor removido: %d", dequeue(&inicio, &fim));
-            break;
-
-        case 3:
-            printf("\n\tApresentar a Lista ::\n");
-            //exibir(lista);
             break;
 
         case 0:
