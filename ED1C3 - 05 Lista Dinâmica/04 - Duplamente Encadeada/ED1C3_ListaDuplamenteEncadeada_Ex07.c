@@ -1,7 +1,14 @@
 /*
-    EXERCÍCIO 00:
-    Codifique, compile e execute um programa em Linguagem C que implemente um lista
-    duplamente encadeada.
+    EXERCÍCIO 07:
+    Codifique, compile e execute um programa em Linguagem C que permita fazer as seguintes operações
+    sobre uma lista linear simplesmente encadeada formada por elementos do tipo char usando a notação
+    de ponteiro para ponteiro somente quando for realmente necessário:
+        ​a) inserir um elemento no início da lista;
+        ​b) inserir um elemento no final do lista;
+        ​c) remover um elemento do início da lista;
+        d) remover um elemento do final da lista;
+        e) exibir os elementos da lista.
+    **Observação:** Defina funções para cada operação, incluindo uma função menu.
 
     Autor: Danilo Domingues Quirino
     Versão: 2205.06
@@ -45,14 +52,14 @@ void inserirInicio(NOH **lista, int x)
     if (inserir != NULL)
     {
         inserir->valor = x;
-        inserir->esq = NULL; // Ambos ponteiros são inicializados como NULL
-        inserir->dir = NULL; //
-        if (!empty(*lista))  // Verificar se tem elementos na lista
+        inserir->esq = NULL;
+        inserir->dir = NULL;
+        if (!empty(*lista)) 
         {
-            (*lista)->esq = inserir; // O primeiro elemento aponta, pela esq, para o inserir
-            inserir->dir = *lista;   // O elemento inserir aponta, pela dir, para o "primeiro" elemento
+            (*lista)->esq = inserir;
+            inserir->dir = *lista;
         }
-        *lista = inserir; // Ponteiro da lista apontando para o inserir
+        *lista = inserir;
     }
     else
     {
@@ -100,11 +107,11 @@ int removerInicio(NOH **lista)
 
     if (!empty(*lista))
     {
-        remover = *lista;         // Remover recebe o ponteiro do inicio
-        valor = remover->valor;   //
-        *lista = (*lista)->dir;   // Lista aponta agora para o segundo valor (que pode ser NULL)
-        if (!(*lista == NULL))    // Se ainda existir valores na lista
-            (*lista)->esq = NULL; // Primeiro elemento da lista agora aponta, pela esq, para NULL
+        remover = *lista;    
+        valor = remover->valor;   
+        *lista = (*lista)->dir;
+        if (!(*lista == NULL))
+            (*lista)->esq = NULL;
         freeNode(remover);
     }
     else
@@ -137,7 +144,7 @@ int removerFim(NOH **lista)
             remover = auxiliar;
             valor = remover->valor;
 
-            (auxiliar->esq)->dir = NULL; // A posição anterior a última celula na lista recebe NULL
+            (auxiliar->esq)->dir = NULL;
         }
         freeNode(remover);
     }
@@ -166,47 +173,6 @@ void exibir(NOH *lista)
     }
 }
 
-NOH *pesquisar(NOH *lista, int x)
-{
-    NOH *procurar;
-
-    if (!empty(lista))
-    {
-        procurar = lista;
-        while (procurar != NULL)
-        {
-            if (procurar->valor == x)
-                return procurar;
-            procurar = procurar->dir;
-        }
-    }
-    return NULL;
-}
-
-int removerValor(NOH **lista, int x)
-{
-    NOH *remover;
-    int removido;
-
-    if ((remover = pesquisar(*lista, x)) != NULL)
-    {
-        if (*lista == remover)
-            removerInicio(lista);
-        else
-        {
-            (*remover->esq).dir = remover->dir;   // Celula anterior ao remover, aponta para a próxima celula
-            if (remover->dir != NULL)             // Se o elemnto a ser removido não for o último da lista
-                remover->dir->esq = remover->esq; // A próxima celula, aponta para a celúla anterior ao remover
-
-            freeNode(remover);
-        }
-        removido = 1;
-    }
-    else
-        removido = 0;
-    return removido;
-}
-
 int lerValor()
 {
     int v;
@@ -224,14 +190,13 @@ int gerirMenu()
     printf("\n3 -\tRemover valor do Inicio da Lista");
     printf("\n4 -\tRemover valor do Fim da Lista");
     printf("\n5 -\tApresentar a Lista");
-    printf("\n6 -\tBuscar e Remover um valor");
     printf("\n0 -\tEncerrar.\n");
 
     do
     {
         printf("Escolha ==>   ");
         scanf("%d", &op);
-    } while (op < 0 || op > 6);
+    } while (op < 0 || op > 5);
     return op;
 }
 
@@ -279,15 +244,6 @@ int main()
         case 5:
             printf("\n\tApresentar a Lista ::\n");
             exibir(lista);
-            break;
-
-        case 6:
-            printf("\n\tBuscar e Remover valor ::\nInforme o valor: ");
-            valor = removerValor(&lista, lerValor());
-            if (valor == 1)
-                printf("Valor removido.\n");
-            else
-                printf("Valor nao encontrado na lista.\n");
             break;
 
         case 0:

@@ -110,7 +110,7 @@ char startDequeue(NOH **inicio, NOH **fim)
         removerI = *inicio;       // Remover recebe o ponteiro do inicio
         c = removerI->letra;      // c recebe char
         *inicio = (*inicio)->dir; // O primeiro elemento passa ser o segundo
-        if (*inicio == NULL)      // Caso deque fque vazia, fim também será NULL
+        if (*inicio == NULL)      // Caso deque fique vazia, fim também será NULL
             *fim = NULL;
         else
             (*inicio)->esq = NULL; // Se a deque não ficar fazia, primeiro elemento aponta, pela esq, para NULL
@@ -131,7 +131,7 @@ char endDequeue(NOH **inicio, NOH **fim)
         removerF = *fim;     // Remover recebe o ponteiro do fim
         c = removerF->letra; // Valor recebe char
         *fim = (*fim)->esq;  // O penúltimo elemento passa ser o último
-        if (*fim == NULL) // Caso deque fique vazia, inicio também será NULL
+        if (*fim == NULL)    // Caso deque fique vazia, inicio também será NULL
             *inicio = NULL;
         else
             (*fim)->dir = NULL; // Se deque não ficar vazia, último elemento aponta, pela dir, para NULL
@@ -211,7 +211,8 @@ int main()
 
         case 3:
             printf("\tRemover caracter do Inicio da Lista ::\t");
-            if ((letra = startDequeue(&inicio, &fim)) != NULL)
+            letra = startDequeue(&inicio, &fim);
+            if (letra != NULL)
                 printf("Valor removido: %c\n", letra);
             else
                 printf("Erro, deque vazia.\n");
@@ -219,7 +220,8 @@ int main()
 
         case 4:
             printf("\tRemover caracter do Fim da Lista ::\t");
-            if ((letra = endDequeue(&inicio, &fim)) != NULL)
+            letra = endDequeue(&inicio, &fim);
+            if ((letra) != NULL)
                 printf("Valor removido: %c\n", letra);
             else
                 printf("Erro, deque vazia.\n");
