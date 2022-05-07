@@ -92,45 +92,36 @@ CELULA *inserirOrdem(CELULA *lista, int x)
 
 CELULA *ordenar(CELULA *lista) // AOK, funcionando
 {
-    CELULA *atual, *anterior, *proximo, *aux;
+    CELULA *atualPivo, *atualInterno, *anterior, *proximo;
 
-    atual = lista;
+    atualPivo = lista;
 
     // Segundo nível da organização, avançando uma posição a frente a cada iteração
-    while (atual != NULL)
+    while (atualPivo != NULL)
     {
-        aux = lista;
+        atualInterno = atualPivo;
         anterior = NULL;
-        proximo = aux->next;
+        proximo = atualInterno->next;
 
-        if (aux->next == NULL)
+        while (atualInterno != NULL && proximo != NULL)
         {
-            return lista;
-        }
-        else
-        {
-            // Primeiro nível de organização, troca de apenas um unico valor de posição
-            while (proximo != NULL && (aux->info < proximo->info))
+            if (atualInterno->info > proximo->info)
             {
-                anterior = aux;
-                aux = proximo;
-                proximo = aux->next;
-            }
-            if (anterior == NULL) // Se acontecer na primeira posição da lista
-            {
-                anterior = proximo->next;
-                proximo->next = aux;
-                aux->next = anterior;
-                lista = proximo;
-            }
-            else if (proximo != NULL) // Acontecer a partir da segunda posição
-            {
-                anterior->next = proximo;
-                aux->next = proximo->next;
-                proximo->next = aux;
+                if (anterior != NULL)
+                {
+                    anterior->next = proximo;
+                    atualInterno->next = proximo->next;
+                    proximo->next = atualInterno;
+                }
+                else
+                {
+                    atualInterno->next = proximo->next;
+                    proximo->next = atualInterno;
+                    lista = proximo;
+                }
             }
         }
-        atual = atual->next;
+        atualPivo = atualPivo->next;
     }
     return lista;
 }
@@ -244,7 +235,7 @@ int main()
         case 1:
             printf("\nInsercao na Lista.\n");
             lista = inserirFim(lista, leituraValor());
-            //lista = inserirOrdem(lista, leituraValor());
+            // lista = inserirOrdem(lista, leituraValor());
             break;
 
         case 2:
