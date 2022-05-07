@@ -1,5 +1,5 @@
 /*
-    EXERCÍCIO 03:
+    EXERCÍCIO 04:
     Codifique, compile e execute um programa em Linguagem C que implemente as informações
     abaixo de uma lista simplesmente encadeada circular formada por elementos do tipo
     inteiro. Teste seu programa criando um menu com as opções de inserir, remover

@@ -1,5 +1,5 @@
 /*
-    EXERCÍCIO 03:
+    EXERCÍCIO 05:
     Codifique, compile e execute um programa em Linguagem C que implemente as informações abaixo
     de uma lista simplesmente encadeada circular com nó cabeçalho formada por elementos do
     tipo inteiro positivo. Teste seu programa criando um menu com as opções de inserir,
@@ -7,7 +7,7 @@
         Operações: init; getnode, freenode, insere_fim, listar, remove_inicio
 
     Autor: Danilo Domingues Quirino
-    Versão: 2205.02
+    Versão: 2205.07
 */
 
 #include <ctype.h>
@@ -20,26 +20,26 @@ typedef struct sCell
     struct sCell *next;
 } CPONTO;
 
-void init(CPONTO **lista)
-{
-    *lista = NULL;
-}
-
 CPONTO *getNode()
 {
     return (CPONTO *)malloc(sizeof(CPONTO));
 }
 
+void init(CPONTO **lista)
+{
+    *lista = getNode();
+    if (lista != NULL)
+    {
+        (*lista)->valor = -3425;
+        (*lista)->next = *lista;
+    }
+    else
+        printf("\nErro na alocacao do no");
+}
+
 void freeNode(CPONTO *no)
 {
     free(no);
-}
-
-int listaVazia(CPONTO *lista)
-{
-    if (lista == NULL)
-        return 1;
-    return 0;
 }
 
 void exibir(CPONTO *lista)
@@ -71,20 +71,18 @@ void inserirFim(CPONTO **lista, int x)
     if (inserir != NULL)
     {
         inserir->valor = x;
-        if (listaVazia(*lista))
-        {
-            inserir->next = inserir;
-            (*lista) = inserir;
-        }
+
+        if ((*lista)->next == *lista)
+            (*lista)->next = inserir;
         else
         {
             auxiliar = (*lista)->next;
-            while (auxiliar->valor >= 0)
+            while (auxiliar->next != *lista)
                 auxiliar = auxiliar->next;
-
             auxiliar->next = inserir;
-            inserir->next = *lista; // resolver exibir e voltar para aqui
         }
+
+        inserir->next = *lista;
     }
     else
     {
@@ -95,26 +93,20 @@ void inserirFim(CPONTO **lista, int x)
 
 void removerInicio(CPONTO **lista)
 {
-    CPONTO *auxiliar;
+    CPONTO *remover;
+    int valor;
 
-    if (!listaVazia(*lista))
+    if ((*lista)->next != *lista)
     {
-        printf("\n\tRemover Valor :: \n");
-        if ((*lista) != (*lista)->next)
-        {
-            auxiliar = (*lista)->next;
-            (*lista)->next = auxiliar->next;
-            freeNode(auxiliar);
-            
-            
-            freeNode(*lista);
-            *lista = NULL;
-        }
-        else
-            printf("Erro, lista vazia, nao e possivel remover um valor.");
+        printf("\tRemover Valor :: ");
+        remover = (*lista)->next;
+        valor = remover->valor;
+        (*lista)->next = remover->next;
+        freeNode(remover);
+        printf("%d.\n", valor);
     }
     else
-        printf("Erro, lista vazia, nao e possivel remover um valor.");
+        printf("\tErro, lista vazia, nao e possivel remover um valor.\n");
 }
 
 int lerValor()
@@ -151,8 +143,7 @@ int main()
     CPONTO *lista;
     int op;
 
-    init(&lista);
-    inserirFim(&lista, -3425); // Inserir o nó de cabeçalho, u valor na primeira posição que não é valido
+    init(&lista); // Inicializa a lista, já com o nó de cabeçalho
 
     do
     {
@@ -160,7 +151,7 @@ int main()
         switch (op)
         {
         case 1:
-            printf("\n\tInserir Valor ::\n");
+            printf("\tInserir Valor :: ");
             inserirFim(&lista, lerValor());
             break;
 
@@ -169,7 +160,7 @@ int main()
             break;
 
         case 3:
-            printf("\n\tApresentar a Lista ::\n");
+            printf("\tApresentar a Lista :: ");
             exibir(lista);
             break;
 
