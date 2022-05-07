@@ -1,20 +1,21 @@
 /*
     EXERCÍCIO 00:
-        Crie um arquivo ListaSimplesmentEncadeadaCircular.c e
-        implementa as seguintes informações de uma lista circular:
-            * Definição
-            * Operações
-            * init
-            * getnode
-            * freenode
-            * insere_inicio
-            * listar
-            * remove_inicio
+    Crie um arquivo ListaSimplesmentEncadeadaCircular.c e
+    implementa as seguintes informações de uma lista circular:
+        * Definição
+        * Operações
+        * init
+        * getnode
+        * freenode
+        * insere_inicio
+        * listar
+        * remove_inicio
 
-        Teste seu programa criando um menu com as opções de inserir, remover e exibir.
+    Teste seu programa criando um menu com as opções de inserir, remover e exibir.
+    CÓDIGO DE ESTUDO: ALTERAÇÕES CONSTANTES
 
     Autor: Danilo Domingues Quirino
-    Versão: 2204.14
+    Versão: 2205.07
 */
 
 #include <stdio.h>

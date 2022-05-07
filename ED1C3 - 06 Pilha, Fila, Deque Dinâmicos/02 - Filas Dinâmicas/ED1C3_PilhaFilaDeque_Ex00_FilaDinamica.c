@@ -1,9 +1,10 @@
 /*
     EXERCÍCIO 00:
     Codifique, compile e execute um programa em Linguagem C que implemente um fila dinâmica.
+    CÓDIGO DE ESTUDO: ALTERAÇÕES CONSTANTES
 
     Autor: Danilo Domingues Quirino
-    Versão: 2205.05
+    Versão: 2205.07
 */
 
 #include <stdio.h>

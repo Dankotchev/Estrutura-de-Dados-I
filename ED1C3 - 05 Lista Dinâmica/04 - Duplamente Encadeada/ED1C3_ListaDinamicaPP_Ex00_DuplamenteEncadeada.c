@@ -2,9 +2,10 @@
     EXERCÍCIO 00:
     Codifique, compile e execute um programa em Linguagem C que implemente um lista
     duplamente encadeada.
+    CÓDIGO DE ESTUDO: ALTERAÇÕES CONSTANTES
 
     Autor: Danilo Domingues Quirino
-    Versão: 2205.06
+    Versão: 2205.07
 */
 #include <ctype.h>
 #include <stdio.h>

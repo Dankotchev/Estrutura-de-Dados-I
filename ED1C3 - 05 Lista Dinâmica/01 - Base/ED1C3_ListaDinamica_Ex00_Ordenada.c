@@ -1,9 +1,10 @@
 /*
     EXERCÍCIO "Contagem":
     Implementar Lista Dinâmica auto ordenada;
+    CÓDIGO DE ESTUDO: ALTERAÇÕES CONSTANTES
 
     Autor: Danilo Domingues Quirino
-    Versão: 2204.30
+    Versão: 2205.07
 */
 
 #include <stdio.h>
