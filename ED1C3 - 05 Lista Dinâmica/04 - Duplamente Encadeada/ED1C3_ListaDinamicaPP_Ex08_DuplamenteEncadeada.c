@@ -1,17 +1,11 @@
 /*
-    EXERCÍCIO 06:
-    Marcos Paulo, como todo amante de filmes, sempre sonhou com uma televisão grande para suas sessões
-    de cinema no final de semana. A televisão que tinha em casa, 14 polegadas, foi adquirida na época
-    da faculdade e o acompanhou em várias etapas de sua vida profissional: graduação, mestrado, primeiro
-    emprego. Sem falar que, graças a ela, ele se tornou fluente em inglês, pois as legendas pequenas
-    eram difíceis de acompanhar durante os filmes. Após passar em um concurso federal, ele recebeu de
-    presente dos pais uma televisão de 50 polegadas que o deixou bastante feliz e satisfeito.
-    Uma de suas manias ao assistir televisão é pegar o controle remoto e ficar pulando de canal em
-    canal sem, na verdade, assistir nenhum programa (mania esta que causava bastante irritação na esposa).
-    Desenvolva uma aplicação usando o conceito de lista simplesmente encadeada circular que permita
-    cadastrar os canais da operadora CTBC de TV a cabo (ex: Fox, Megapix, Universal, GNT, SBT, etc)
-    e ilustre a mania de Marcos Paulo. Lembrando que o controle de Marcos Paulo veio com problemas e
-    só permitia que ele passasse os canais para frente, nunca para trás.
+    EXERCÍCIO 08:
+    Marcos Paulo irritado com o controle remoto de sua televisão que só passava os canais em uma
+    direção, resolveu ligar na garantia do produto solicitando um novo controle remoto que funcionasse
+    corretamente (capaz de percorrer em duas direções,‘aumentar’ e ‘diminuir’ os canais). Utilizando
+    como base a implementação do exercício 6), codifique, compile e execute uma nova aplicação que
+    seja capaz de percorrer os canais com o novo controle remoto. Para isso, utilize o conceito de
+    lista linear duplamente encadeada circular.
 
     Autor: Danilo Domingues Quirino
     Versão: 2205.07
@@ -32,7 +26,7 @@ typedef struct sCanal
 typedef struct sCTBC
 {
     CHANEL canal;
-    struct sCTBC *next;
+    struct sCTBC *esq, *dir;
 } NOH;
 
 NOH *getNode()
@@ -60,7 +54,7 @@ int listaVazia(NOH *lista)
 void mostrarCanalAtual(NOH *lista)
 {
     NOH *exibir;
-    exibir = lista->next;
+    exibir = lista->dir;
 
     if (exibir != NULL)
     {
@@ -73,10 +67,18 @@ void mostrarCanalAtual(NOH *lista)
     printf("\n");
 }
 
-void mudarCanal(NOH **lista)
+void mudarCanalAumentar(NOH **lista)
 {
     if (*lista != NULL)
-        *lista = (*lista)->next;
+        *lista = (*lista)->dir;
+    else
+        printf("Erro, lista de Canais vazia.\n");
+}
+
+void mudarCanalDiminuir(NOH **lista)
+{
+    if (*lista != NULL)
+        *lista = (*lista)->esq;
     else
         printf("Erro, lista de Canais vazia.\n");
 }
@@ -91,11 +93,16 @@ void inserirCanal(NOH **lista, CHANEL canal)
         inserir->canal = canal;
 
         if (listaVazia(*lista))
-            inserir->next = inserir;
+        {
+            inserir->dir = inserir;
+            inserir->esq = inserir;
+        }
         else
         {
-            inserir->next = (*lista)->next; // Novo nó aponta para onde o ultimo nó apontava, ou seja, o primeiro nó da lista
-            (*lista)->next = inserir;
+            inserir->dir = (*lista)->dir; // Novo nó aponta para onde o ultimo nó apontava, ou seja, o primeiro nó da lista
+            inserir->esq = *lista;
+            (*lista)->dir = inserir;
+            inserir->dir->esq = inserir;
         }
         *lista = inserir;
     }
@@ -131,14 +138,15 @@ int gerirMenu()
     printf("\nEscolha a operacao desejada.\n");
     printf("\n1 -\tMostrar Canal Atual");
     printf("\n2 -\tAdicionar Canal de TV");
-    printf("\n3 -\tMudar Canal de TV");
+    printf("\n3 -\tMudar Canal (Aumentar) de TV");
+    printf("\n4 -\tMudar Canal (Diminuir) de TV");
     printf("\n0 -\tEncerrar.\n");
 
     do
     {
         printf("Escolha ==>   ");
         scanf("%d", &op);
-    } while (op < 0 || op > 3);
+    } while (op < 0 || op > 4);
     return op;
 }
 
@@ -168,7 +176,13 @@ int main()
 
         case 3:
             printf("\tMudar de Canal ::\n");
-            mudarCanal(&lista);
+            mudarCanalAumentar(&lista);
+            mostrarCanalAtual(lista);
+            break;
+
+        case 4:
+            printf("\tMudar de Canal ::\n");
+            mudarCanalDiminuir(&lista);
             mostrarCanalAtual(lista);
             break;
 
