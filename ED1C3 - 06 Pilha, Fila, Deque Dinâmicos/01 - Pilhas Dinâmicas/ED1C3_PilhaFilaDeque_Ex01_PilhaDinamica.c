@@ -52,6 +52,8 @@ void push(NOH **top, float x)
         inserir->numero = x;
         if (!empty(*top))
             inserir->next = *top;
+        else
+        	inserir->next = NULL;
         *top = inserir;
     }
     else
