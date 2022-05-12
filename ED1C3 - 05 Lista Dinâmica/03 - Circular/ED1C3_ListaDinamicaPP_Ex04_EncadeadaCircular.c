@@ -89,24 +89,24 @@ void inserirFim(CPONTO **lista, int x)
     }
 }
 
-int removerInicio(CPONTO ***lista)
+int removerInicio(CPONTO **lista)
 {
     CPONTO *auxiliar;
     int valor;
 
-    if (!listaVazia(**lista))
+    if (!listaVazia(*lista))
     {
-        if ((**lista) == (**lista)->next)
+        if ((*lista) == (*lista)->next)
         {
-            valor = (**lista)->valor;
-            freeNode(**lista);
-            **lista = NULL;
+            valor = (*lista)->valor;
+            freeNode(*lista);
+            *lista = NULL;
         }
         else
         {
-            auxiliar = (**lista)->next;
+            auxiliar = (*lista)->next;
             valor = auxiliar->valor;
-            (**lista)->next = auxiliar->next;
+            (*lista)->next = auxiliar->next;
             freeNode(auxiliar);
         }
     }
@@ -144,7 +144,7 @@ void removerValor(CPONTO **lista)
 {
     int val;
     printf("\n\tRemover Valor :: \n");
-    val = removerInicio(&lista);
+    val = removerInicio(lista);
     if (val != NULL)
 
         printf("Valor %d removido.", val);

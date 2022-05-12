@@ -1,14 +1,14 @@
 /*
-    EXERCÍCIO 11 Extra:
-    Desenvolva um programa para distribuição de senhas para o atendimento em um
-    consultório, que conta com uma única secretária e um único médico. Supondo que não
-    há desistências, seu programa deve apoiar as seguintes situações: (a) Ao chegar no
-    consultório, o paciente vai até a secretária e recebe uma senha numérica para ser
-    atendido. (b) Quando o médico fica disponível para atender a um novo paciente, a
-    secretária chama o paciente que está há mais tempo na fila.
+    EXERCï¿½CIO 11 Extra:
+    Desenvolva um programa para distribuiï¿½ï¿½o de senhas para o atendimento em um
+    consultï¿½rio, que conta com uma ï¿½nica secretï¿½ria e um ï¿½nico mï¿½dico. Supondo que nï¿½o
+    hï¿½ desistï¿½ncias, seu programa deve apoiar as seguintes situaï¿½ï¿½es: (a) Ao chegar no
+    consultï¿½rio, o paciente vai atï¿½ a secretï¿½ria e recebe uma senha numï¿½rica para ser
+    atendido. (b) Quando o mï¿½dico fica disponï¿½vel para atender a um novo paciente, a
+    secretï¿½ria chama o paciente que estï¿½ hï¿½ mais tempo na fila.
 
     Autor: Danilo Domingues Quirino
-    Versão: 2205.05
+    Versï¿½o: 2205.05
 */
 
 #include <ctype.h>
