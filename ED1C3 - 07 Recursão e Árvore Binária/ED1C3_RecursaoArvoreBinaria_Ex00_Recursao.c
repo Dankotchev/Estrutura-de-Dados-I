@@ -1,19 +1,17 @@
 /*
-    EXERCÍCIO 01:
+    EXERCÍCIO 00:
     Codifique, compile e execute um programa em Linguagem C que permita fazer as
     seguintes operações sobre uma lista linear simplesmente encadeada formada por
     elementos do tipo char usando a notação de ponteiro para ponteiro somente quando
     for realmente necessário:
         a. Inserir um elemento no início da lista;
-        b. Inserir um elemento no final da lista;
-        c. Remover um elemento do início da lista;
-        d. Remover um determinado elemento da lista;
-        e. Exibir os elementos da lista.
+        b. Exibir lista na ordem direta;
+        c. Exibir lista na ordem indireta;
 
     OBS: Defina funções para cada operação, incluindo uma função menu.
 
     Autor: Danilo Domingues Quirino
-    Versão: 2204.14
+    Versão: 2205.16
 */
 
 #include <stdio.h>
