@@ -1,17 +1,16 @@
 /*
-    EXERCÕCIO 00:
-    Codifique, compile e execute um programa em Linguagem C que permita fazer as
-    seguintes operaÁıes sobre uma lista linear simplesmente encadeada formada por
-    elementos do tipo char usando a notaÁ„o de ponteiro para ponteiro somente quando
-    for realmente necess·rio:
-        a. Inserir um elemento no inÌcio da lista;
+    EXERC√çCIO 00:
+    Codifique, compile e execute um programa em Linguagem C que permita fazer as seguintes opera√ß√µeses
+    sobre uma lista linear simplesmente encadeada formada por elementos do tipo char usando a nota√ß√£o
+    de ponteiro para ponteiro somente quando for realmente necess√°rio:
+        a. Inserir um elemento no in√≠cio da lista;
         b. Exibir lista na ordem direta;
         c. Exibir lista na ordem indireta;
 
-    OBS: Defina funÁıes para cada operaÁ„o, incluindo uma funÁ„o menu.
+    OBS: Defina fun√ß√µes para cada opera√ß√£o, incluindo uma fun√ß√£o menu.
 
     Autor: Danilo Domingues Quirino
-    Vers„o: 2205.16
+    VersÔøΩo: 2206.20
 */
 
 #include <stdio.h>
@@ -19,66 +18,58 @@
 
 typedef struct cell
 {
-    int valor;
-    struct cell *next;
-} CELULA;
+    int info;
+    struct cell *esq;
+    struct cell *dir;
+} NOH;
 
-void inicializar(CELULA **lista)
+void inicializar(NOH **raiz)
 {
-    *lista = NULL;
+    *raiz = NULL;
 }
 
-CELULA *getNode()
+NOH *getNode()
 {
-    return (CELULA *)malloc(sizeof(CELULA));
+    return (NOH *)malloc(sizeof(NOH));
 }
 
-void freeNode(CELULA *no)
+void freeNode(NOH *no)
 {
     free(no);
 }
 
-int listaVazia(CELULA *lista)
+int vazia(NOH *raiz)
 {
-    if (lista == NULL)
+    if (raiz == NULL)
         return 1;
     return 0;
 }
 
-void exibirLista(CELULA *lista)
+void exibir(NOH *raiz)
 {
-    while (lista != NULL)
+    if (!vazia(raiz))
     {
-        printf("%d\t", lista->valor);
-        lista = lista->next;
+        exibir(raiz->esq);
+        printf("%d\t", raiz->info);
+        exibir(raiz->dir);
     }
-    printf("\n");
 }
 
-void exibirListaRecursao(CELULA *lista)
+void inserir(NOH **raiz, int x)
 {
-    if(lista->next != NULL)
-        exibirListaRecursao(lista->next);
-    printf("%d\t",lista->valor);
-}
-
-
-
-void inserirInicio(CELULA **lista, int x)
-{
-    CELULA *inserir;
-
-    inserir = getNode();
-    if (inserir != NULL)
+    if(vazia(*raiz))
     {
-        inserir->valor = x;
-        inserir->next = *lista;
-        *lista = inserir;
+        *raiz = getNode();
+        (*raiz)->esq = NULL;
+        (*raiz)->dir = NULL;
+        (*raiz)->info = x;
     }
     else
     {
-        printf("\nErro na alocacao do no");
-        exit(1);
+        if(x <(*raiz)->info)
+            inserir(&((*raiz)->esq), x);
+        else //if(x >= (*raiz)->info)
+            inserir(&((*raiz)->dir), x);
     }
 }
 
@@ -87,16 +78,16 @@ int gerirMenu()
     int opcao;
     printf("\n----------\n\tRECURSIVIDADE");
     printf("\nEscolha a operacao desejada, informando o codigo correpondente.\n");
-    printf("\n1 -\tInserir elementos na Lista;");
-    printf("\n2 -\tExibir a lista (Ordem direta);");
-    printf("\n3 -\tExibir a lista (Ordem indireta);");
+    printf("\n1 -\tInserir elementos na Arvore;");
+    printf("\n2 -\tExibir a arvore (Em-Ordem);");
     printf("\n0 -\tEncerrar Sistema.\n");
 
     do
     {
         printf("Escolha ==>   ");
         scanf("%d", &opcao);
-    } while (opcao < 0 || opcao > 3);
+    }
+    while (opcao < 0 || opcao > 2);
     return opcao;
 }
 
@@ -111,9 +102,10 @@ int leituraValor()
 int main()
 {
 
-    CELULA *lista;
-    inicializar(&lista);
+    NOH *raiz;
+    inicializar(&raiz);
     int opcao;
+    int valor;
 
     do
     {
@@ -122,18 +114,16 @@ int main()
         switch (opcao)
         {
         case 1:
-            printf("\tInsercao de valores na Lista");
-            inserirInicio(&lista, leituraValor());
+            printf("\tInsercao de valores na Arvore");
+            printf("\n\tDigite um valor: ");
+            scanf("%d", &valor);
+            //inserir(&raiz, leituraValor());
+            inserir(&raiz, valor);
             break;
 
         case 2:
-            printf("\tExibir a lista (Ordem direta)\n");
-            exibirLista(lista);
-            break;
-
-        case 3:
-            printf("\tExibir a lista (Ordem indireta)\n");
-            exibirListaRecursao(lista);
+            printf("\tExibir a arvore (Em Ordem)\n");
+            exibir(raiz);
             break;
 
         case 0:
@@ -141,7 +131,8 @@ int main()
             break;
         }
 
-    } while (opcao != 0);
+    }
+    while (opcao != 0);
 
     return 0;
 }
